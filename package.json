@@ -1,0 +1,27 @@
+{
+  "name": "haste",
+  "version": "1.0.0",
+  "description": "ticketing system by K.E.T.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/katetho/haste.git"
+  },
+  "keywords": [
+    "ticket"
+  ],
+  "author": "K.E.T. (katetho)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/katetho/haste/issues"
+  },
+  "homepage": "https://github.com/katetho/haste#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "nodemon": "^2.0.2"
+  }
+}
