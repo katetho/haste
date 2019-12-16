@@ -5,6 +5,12 @@ const bodyParser = require('body-parser');
 require('dotenv/config');
 const ticketsRoute = require('./routes/tickets');
 const cors = require('cors');
+const path = require('path');
+const exphbrs = require('express-handlebars');
+
+app.set('views', path.join(__dirname, 'views'));
+app.engine('handlebars', exphbrs({defaultLayout: 'main'}));
+app.set('view engine', 'handlebars');
 
 app.use(bodyParser.json());
 app.use(cors());
@@ -13,7 +19,7 @@ app.use('/tickets', ticketsRoute);
 
 
 app.get('/', (req, res) => {
-	res.send("Response sent");
+	res.render('home');
 });
 
 //Connect to DB
