@@ -8,7 +8,8 @@ const cors = require('cors');
 const path = require('path');
 const exphbrs = require('express-handlebars');
 
-app.set('views', path.join(__dirname, 'views'));
+app.use(express.static(path.join(__dirname, '/public')));
+app.set('views', path.join(__dirname, '/public/views'));
 app.engine('handlebars', exphbrs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 

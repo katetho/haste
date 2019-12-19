@@ -29,5 +29,13 @@
     "handlebars": "^4.5.3",
     "mongoose": "^5.8.1",
     "nodemon": "^2.0.2"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.26.7",
+    "gulp": "^3.8.11",
+    "gulp-concat": "^2.6.1",
+    "gulp-sass": "^4.0.2",
+    "gulp-uglify": "^3.0.2",
+    "uglify": "^0.1.5"
   }
 }

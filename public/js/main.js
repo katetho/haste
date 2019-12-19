@@ -1,0 +1,1 @@
+console.log("cl1"),console.log("cl2"),console.log("file2 cl jking");
