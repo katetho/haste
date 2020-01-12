@@ -1,6 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const Ticket = require('../models/Ticket')
+const app = express();
+const path = require('path');
+
+app.use(express.static(path.join(__dirname, '/public')));
 
 router.get('/', async (req, res)=> {
 try { const tickets = await Ticket.find()

@@ -1,7 +1,11 @@
 const gulp = require('gulp');
-const uglify = require('gulp-uglify');
 const sass = require('gulp-sass');
 const concat = require('gulp-concat');
+const plumber = require("gulp-plumber");
+const rename = require("gulp-rename");
+const terser = require('gulp-terser');
+const cleanCSS = require("gulp-clean-css");
+const autoprefixer = require("gulp-autoprefixer");
 const browserSync = require('browser-sync').create();
 
 gulp.task('msg', function () {
@@ -12,6 +16,9 @@ gulp.task('htmls', function() {
   gulp.src('src/views/*.handlebars')
   .pipe(gulp.dest('public/views'))
   .pipe(browserSync.stream());
+  gulp.src('src/views/*.html')
+  .pipe(gulp.dest('public/views/layouts'))
+  .pipe(browserSync.stream());
   gulp.src('src/views/layouts/*.handlebars')
   .pipe(gulp.dest('public/views/layouts'))
   .pipe(browserSync.stream());
@@ -20,16 +27,28 @@ gulp.task('htmls', function() {
 gulp.task('concatenate-js', function() {
   gulp.src('src/js/*.js')
   .pipe(concat('main.js'))
-  .pipe(uglify())
+  .pipe(terser())
   .pipe(gulp.dest('public/js'))
   .pipe(browserSync.stream());
 })
 
 gulp.task('sass', function() {
-  gulp.src('src/sass/*.scss')
-  .pipe(sass().on('error', sass.logError))
-  .pipe(concat('style.css'))
-  .pipe(gulp.dest('public/css'))
+  gulp.src("src/scss/*.scss")
+  .pipe(plumber())
+  .pipe(sass({
+    outputStyle: "expanded",
+    includePaths: "./node_modules",
+  }))
+  .on("error", sass.logError)
+  .pipe(autoprefixer({
+    cascade: false
+  }))
+  .pipe(gulp.dest("public/css"))
+  .pipe(rename({
+    suffix: ".min"
+  }))
+  .pipe(cleanCSS())
+  .pipe(gulp.dest("public/css"))
   .pipe(browserSync.stream());
 })
 
@@ -43,6 +62,7 @@ gulp.task('watch', function() {
 	});
   gulp.watch('src/views/*.handlebars', ['htmls']),
   gulp.watch('src/views/layouts/*.handlebars', ['htmls']),
+  gulp.watch('src/views/layouts/*.html', ['htmls']),
   gulp.watch('src/js/*.js', ['concatenate-js']),
-  gulp.watch('src/sass/*.scss', ['sass'])
+  gulp.watch('src/scss/**/*.scss', ['sass'])
 })
