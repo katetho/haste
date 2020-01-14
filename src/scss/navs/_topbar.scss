@@ -13,9 +13,9 @@
   }
   .navbar-search {
     width: 25rem;
-    input {
+    .search-input {
       font-size: 0.85rem;
-      height: auto;
+      height: inherit;
     }
   }
   .topbar-divider {
