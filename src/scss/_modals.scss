@@ -54,6 +54,7 @@
   border-radius: 5px;
   color: $white;
 	padding: 0.3rem;
+  margin-top: 2.3rem;
   margin-bottom: 2rem;
 }
 
@@ -70,7 +71,7 @@
 .text-field, select {
   background: rgba(255, 255, 255, 0.1);
   border-radius: 4px;
-  border: none;
+  border: 0.1rem;
   border: solid #CFD8DC 1px;
   height: 2.6rem;
   padding: 0.5rem;
