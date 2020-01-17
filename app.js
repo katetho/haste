@@ -10,8 +10,8 @@ const exphbrs = require('express-handlebars');
 
 app.use(express.static(path.join(__dirname, '/public')));
 app.set('views', path.join(__dirname, '/public/views'));
-app.engine('handlebars', exphbrs({defaultLayout: 'main'}));
-app.set('view engine', 'handlebars');
+app.engine('hbs', exphbrs({defaultLayout: 'main.hbs'}));
+app.set('view engine', 'hbs');
 
 app.use(bodyParser.json());
 app.use(cors());
