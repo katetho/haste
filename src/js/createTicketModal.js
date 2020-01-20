@@ -18,26 +18,38 @@
                 inputCount++;
                 input.style.borderColor = '#CFD8DC';
                 if (inputCount === inputs.length) {
+                  let ticketsArr = []
                     for (let input of inputs) {
-                        console.log(input.value)
+                      ticketsArr.push(input.value);
                     }
+                    postTicket(new Ticket(...ticketsArr)); //ES6, for ES5 - loop through
                 }
             }
         }
+            bgModal.style.display = "none";
+            page.className = '';
+    }
+
+    function centerModal() {
+      let width = contents.getBoundingClientRect()
+          .width;
+      let height = contents.getBoundingClientRect()
+          .height;
+      scrollTo({
+          top: contents.offsetTop - height / 5,
+          left: contents.offsetLeft - width / 5,
+          behavior: 'smooth'
+      });
     }
 
     newTicketBtn.onclick = function() {
         bgModal.style.display = "flex";
         page.className = 'blur'
-        let width = contents.getBoundingClientRect()
-            .width;
-        let height = contents.getBoundingClientRect()
-            .height;
-        scrollTo({
-            top: contents.offsetTop - height / 5,
-            left: contents.offsetLeft - width / 5,
-            behavior: 'smooth'
-        });
+        centerModal();
+    }
+
+    window.onresize = function() {
+      centerModal();
     }
 
     closeBtn.onclick = function() {
@@ -52,4 +64,6 @@
     deadline.onblur = function() { //show the placeholder onblur
         this.type = "text";
     }
+
+    localStorage.setItem('Modified', document.lastModified)
 })()

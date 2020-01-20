@@ -1,5 +1,5 @@
 /*function getTickets() {
-    var xhr = new XMLHttpRequest();
+    let xhr = new XMLHttpRequest();
     xhr.open('GET', 'http://localhost:3002/tickets', true);
     xhr.send();
     xhr.onreadystatechange = function() {
@@ -10,23 +10,13 @@
     }
 }
 getTickets();
-
-function postTicket() {
-    var xhr = new XMLHttpRequest();
+*/
+function postTicket(obj) {
+    let xhr = new XMLHttpRequest();
     xhr.open('POST', 'http://localhost:3002/tickets', true);
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.onreadystatechange = function() {
         if (this.status == 200 && this.readyState == 4) {}
     }
-    var ticket = {
-        "title": "Kitty's paw",
-        "description": "Kitty has cute paws"
-    }
-    xhr.send(JSON.stringify(ticket))
+    xhr.send(JSON.stringify(obj))
 }
-var sendBtn = document.getElementsByClassName('button')[0];
-
-sendBtn.onclick = function() {
-    postTicket();
-}
-*/

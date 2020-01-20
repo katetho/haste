@@ -2,7 +2,19 @@ const mongoose = require('mongoose');
 
 const TicketSchema = mongoose.Schema({
 	title: {
+	type: String,
+	required: true
+},
+	department: {
 		type: String,
+		required: true
+	},
+	priority: {
+		type: String,
+		required: true
+	},
+	deadline: {
+		type: Date,
 		required: true
 	},
 	description: {

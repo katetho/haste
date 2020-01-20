@@ -1,10 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const Ticket = require('../models/Ticket')
-const app = express();
 const path = require('path');
 
-app.use(express.static(path.join(__dirname, '/public')));
 
 router.get('/', async (req, res) => {
     try {
@@ -20,10 +18,13 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => {
     const ticket = new Ticket({
         title: req.body.title,
+        department: req.body.department,
+        priority: req.body.priority,
+        deadline: req.body.deadline,
         description: req.body.description
     });
     try {
-        const savedTicket = ticket.save()
+        const savedTicket = ticket.save();
         res.json(ticket)
     } catch (err) {
         res.json({
@@ -45,10 +46,11 @@ router.get('/:ticketId', async (req, res) => {
 
 router.delete('/:ticketId', async (req, res) => {
     try {
-        const ticketToRemove = await Ticket.remove({
+        const ticketToRemove = await Ticket.deleteOne({
             _id: req.params.ticketId
         })
-        res.json(Ticket.find());
+        const tickets = await Ticket.find()
+        res.json(tickets);
     } catch (err) {
         res.json({
             message: err
@@ -60,9 +62,13 @@ router.patch('/:ticketId', async (req, res) => {
     try {
         const updatedTicket = await Ticket.updateOne({
             id: req.params.ticketId,
-            title: req.body.title
+            title: req.body.title,
+            department: req.body.department,
+            priority: req.body.priority,
+            deadline: req.body.deadline,
+            description: req.body.description
         })
-        res.json(updatedTicket)
+        res.json(req.body)
     } catch (err) {
         res.json({
             message: err
