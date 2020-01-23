@@ -13,14 +13,14 @@ gulp.task('msg', function () {
 })
 
 gulp.task('htmls', function() {
-  gulp.src('src/views/*.hbs')
+  gulp.src('src/views/*.handlebars')
   .pipe(gulp.dest('public/views'))
   .pipe(browserSync.stream());
-  gulp.src('src/views/*.html')
+  gulp.src('src/views/layouts/*.handlebars')
   .pipe(gulp.dest('public/views/layouts'))
   .pipe(browserSync.stream());
-  gulp.src('src/views/layouts/*.hbs')
-  .pipe(gulp.dest('public/views/layouts'))
+  gulp.src('src/views/partials/*.handlebars')
+  .pipe(gulp.dest('public/views/partials'))
   .pipe(browserSync.stream());
 })
 
@@ -60,9 +60,8 @@ gulp.task('watch', function() {
         files: ["public/**/*.*"],
         port: 5000,
 	});
-  gulp.watch('src/views/*.hbs', ['htmls']),
-  gulp.watch('src/views/layouts/*.hbs', ['htmls']),
-  gulp.watch('src/views/layouts/*.html', ['htmls']),
+  gulp.watch('src/views/*.handlebars', ['htmls']),
+  gulp.watch('src/views/layouts/*.handlebars', ['htmls']),
   gulp.watch('src/js/*.js', ['concatenate-js']),
   gulp.watch('src/scss/**/*.scss', ['sass'])
 })

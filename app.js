@@ -9,11 +9,12 @@ const cors = require('cors');
 const path = require('path');
 const exphbrs = require('express-handlebars');
 app.use(express.static(path.join(__dirname, '/public')));
+app.set('view engine', 'handlebars');
+app.engine('handlebars', exphbrs({
+	defaultLayout: 'main',
+	partialsDir:path.join(__dirname, '/public/views/partials')
+}));
 app.set('views', path.join(__dirname, '/public/views'));
-app.engine('hbs', exphbrs({defaultLayout: 'main.hbs'}));
-app.set('view engine', 'hbs');
-const Ticket = require('./models/Ticket');
-
 app.use(bodyParser.json());
 app.use(cors());
 

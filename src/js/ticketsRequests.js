@@ -1,16 +1,19 @@
-/*function getTickets() {
+function getTickets() {
     let xhr = new XMLHttpRequest();
-    xhr.open('GET', 'http://localhost:3002/tickets', true);
+    xhr.open('GET', 'http://localhost:3002/', true);
     xhr.send();
     xhr.onreadystatechange = function() {
-        //  console.log('this.responseText');
         if (this.status == 200 && this.readyState == 4) {
-            console.log(JSON.parse(this.responseText));
+            let tickets = this.responseText;
+            let parser = new DOMParser()
+            let parsed = parser.parseFromString(tickets, 'text/html')
+            document
+                .getElementsByClassName('collapsable-section')[0].innerHTML = parsed
+                .getElementsByClassName('collapsable-section')[0].innerHTML;
         }
     }
 }
-getTickets();
-*/
+
 function postTicket(obj) {
     let xhr = new XMLHttpRequest();
     xhr.open('POST', 'http://localhost:3002/tickets', true);
@@ -19,4 +22,5 @@ function postTicket(obj) {
         if (this.status == 200 && this.readyState == 4) {}
     }
     xhr.send(JSON.stringify(obj))
+    return this.responseText;
 }
