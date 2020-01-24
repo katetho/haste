@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Ticket = require('../models/Ticket')
 const path = require('path');
+const distributeItems = require('../middleware/helperFunctions').distribute;
 
 
 router.get('/', async (req, res) => {
@@ -25,7 +26,10 @@ router.post('/', async (req, res) => {
     });
     try {
         const savedTicket = ticket.save();
-        res.json(ticket)
+        const tickets = await Ticket.find()
+        distributeItems(tickets);
+      //  res.json(ticket)
+        res.render('home', {title: 'Tickets', tickets:tickets, layout:false});
     } catch (err) {
         res.json({
             message: err
