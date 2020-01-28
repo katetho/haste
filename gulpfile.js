@@ -62,6 +62,7 @@ gulp.task('watch', function() {
 	});
   gulp.watch('src/views/*.handlebars', ['htmls']),
   gulp.watch('src/views/layouts/*.handlebars', ['htmls']),
+  gulp.watch('src/views/partials/*.handlebars', ['htmls']),
   gulp.watch('src/js/*.js', ['concatenate-js']),
   gulp.watch('src/scss/**/*.scss', ['sass'])
 })

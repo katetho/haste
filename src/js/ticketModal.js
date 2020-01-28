@@ -8,8 +8,9 @@
     let submit = document.getElementsByClassName('submit')[0];
     let deadline = document.getElementById('deadline');
 
-    submit.onclick = async function(event) {
+    submit.onclick = function(event) {
         let inputs = form.querySelectorAll('input, select, textarea'); //get all inputs
+        console.log(form);
         let inputCount = 0;
         for (let input of inputs) {
             if (input.value === "") {
@@ -20,9 +21,14 @@
                 if (inputCount === inputs.length) {
                     let ticketsArr = []
                     for (let input of inputs) {
-                        ticketsArr.push(input.value);
+                      let val = input.value;
+                      if(input.id === 'description' || input.id==='title') {
+                      val = val.slice(0,1)
+                      .toUpperCase()+val.slice(1,val.length);
                     }
-                    let res = await postTicket(new Ticket(...ticketsArr)); //ES6, for ES5 - loop through
+                    ticketsArr.push(val);
+                      }
+                    let res = postTicket(new Ticket(...ticketsArr)); //ES6, for ES5 - loop through
                     bgModal.style.display = "none";
                     page.className = '';
                 }
