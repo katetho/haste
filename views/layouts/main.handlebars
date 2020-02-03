@@ -43,7 +43,7 @@
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
                         <i class="fas fa-fw fa-cog"></i>
-                        <span>My Profile</span>
+                        <span>Claimed Tickets</span>
                     </a>
                     <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     </div>
@@ -52,20 +52,20 @@
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
                         <i class="fas fa-fw fa-wrench"></i>
-                        <span>Utilities</span>
+                        <span>Dispatched tickets</span>
                     </a>
                     <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                     </div>
                 </li>
-                <!-- Divider -->
-                <hr class="sidebar-divider">
-                <!-- Nav Item - Pages Collapse Menu -->
+
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
                         <i class="fas fa-fw fa-folder"></i>
-                        <span>Feedback</span>
+                        <span>Browse Tickets</span>
                     </a>
                 </li>
+                <!-- Divider -->
+                <hr class="sidebar-divider">
                 <!-- Nav Item - Statistics -->
                 <li class="nav-item">
                     <a class="nav-link" href="statistics.html">
@@ -293,7 +293,8 @@
             <header class="ticket-header">Create a ticket</header>
             <fieldset class="ticket-fieldset">
                 <div class="row">
-                    <div class="col">
+                    <div class="col tooltip">
+                      <span class="tooltiptext">No more than 35 characters</span>
                         <input placeholder="Title" class="text-field title" type="text" id="title">
                     </div>
                     <div class="col">

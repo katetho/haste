@@ -13,14 +13,11 @@ gulp.task('msg', function () {
 })
 
 gulp.task('htmls', function() {
-  gulp.src('src/views/*.handlebars')
-  .pipe(gulp.dest('public/views'))
+  gulp.src('views/*.handlebars')
   .pipe(browserSync.stream());
-  gulp.src('src/views/layouts/*.handlebars')
-  .pipe(gulp.dest('public/views/layouts'))
+  gulp.src('views/layouts/*.handlebars')
   .pipe(browserSync.stream());
-  gulp.src('src/views/partials/*.handlebars')
-  .pipe(gulp.dest('public/views/partials'))
+  gulp.src('views/partials/*.handlebars')
   .pipe(browserSync.stream());
 })
 

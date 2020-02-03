@@ -7,12 +7,13 @@
     let form = document.getElementsByClassName('ticket-form')[0];
     let submit = document.getElementsByClassName('submit')[0];
     let deadline = document.getElementById('deadline');
+    let tooltiptext = document.getElementsByClassName('tooltiptext')[0];
 
     submit.onclick = function(event) {
         let inputs = form.querySelectorAll('input, select, textarea'); //get all inputs
-        console.log(form);
+        let title = inputs[0];
         let inputCount = 0;
-        for (let input of inputs) {
+        for (let input of inputs) { //don't iterate through "form" - too many elements
             if (input.value === "") {
                 input.style.borderColor = 'red'; //outline empty fields
             } else {
@@ -21,16 +22,21 @@
                 if (inputCount === inputs.length) {
                     let ticketsArr = []
                     for (let input of inputs) {
-                      let val = input.value;
-                      if(input.id === 'description' || input.id==='title') {
-                      val = val.slice(0,1)
-                      .toUpperCase()+val.slice(1,val.length);
+                        let val = input.value;
+                        if (input.id === 'description' || input.id === 'title') {
+                            val = val.slice(0, 1)
+                                .toUpperCase() + val.slice(1, val.length);
+                        }
+                        ticketsArr.push(val);
                     }
-                    ticketsArr.push(val);
-                      }
-                    let res = postTicket(new Ticket(...ticketsArr)); //ES6, for ES5 - loop through
-                    bgModal.style.display = "none";
-                    page.className = '';
+                    if (title.value.length > 35) {
+                        title.style.borderColor = 'red';
+                        tooltiptext.style.opacity = 1;
+                    } else {
+                        postTicket(new Ticket(...ticketsArr)); //ES6, for ES5 - loop through
+                        bgModal.style.display = "none";
+                        page.className = '';
+                    }
                 }
             }
         }
@@ -49,6 +55,7 @@
     }
 
     newTicketBtn.onclick = function() {
+        tooltiptext.style.opacity = 0;
         bgModal.style.display = "flex";
         page.className = 'blur'
         centerModal();

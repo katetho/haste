@@ -28,7 +28,11 @@ router.post('/', async (req, res) => {
         const tickets = await Ticket.find()
         helperFunctions.distribute(tickets);
         helperFunctions.ticketTime(tickets);
-        res.render('home', {title: 'Tickets', tickets:tickets, layout:false});
+        res.render('home', {
+            title: 'Tickets',
+            tickets: tickets,
+            layout: false
+        });
     } catch (err) {
         res.json({
             message: err

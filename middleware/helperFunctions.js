@@ -30,7 +30,7 @@ module.exports = {
                     item.timeLeft = "Time left: 1 day";
                 }
             } else {
-                item.timeLeft = "Time has expired"
+                item.timeLeft = "Ticket has expired"
             }
         }
     }
