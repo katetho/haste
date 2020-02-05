@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Ticket = require('../models/Ticket')
 const path = require('path');
-const helperFunctions = require('../middleware/helperFunctions');
+const helpers = require('../middleware/helperFunctions');
 
 router.get('/', async (req, res) => {
     try {
@@ -26,8 +26,8 @@ router.post('/', async (req, res) => {
     try {
         const savedTicket = ticket.save();
         const tickets = await Ticket.find()
-        helperFunctions.distribute(tickets);
-        helperFunctions.ticketTime(tickets);
+        helpers.distribute(tickets);
+        helpers.ticketTime(tickets);
         res.render('home', {
             title: 'Tickets',
             tickets: tickets,

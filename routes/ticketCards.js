@@ -2,13 +2,14 @@ const express = require('express');
 const cards = express();
 const Ticket = require('../models/Ticket')
 const path = require('path');
-const helperFunctions = require('../middleware/helperFunctions');
+const helpers = require('../middleware/helperFunctions');
 
-cards.get('/', async (req, res) => {
+
+cards.get('/', helpers.redirectSignin, async (req, res) => {
     try {
         const tickets = await Ticket.find();
-        helperFunctions.distribute(tickets);
-        helperFunctions.ticketTime(tickets);
+        helpers.distribute(tickets);
+        helpers.ticketTime(tickets);
         res.render('home', {
             title: 'Tickets',
             tickets: tickets

@@ -20,6 +20,23 @@ app.engine('handlebars', exphbrs({
 app.use(bodyParser.json());
 app.use(cors());
 
+//Authentication
+app.use(session({
+    name: "sid",
+    saveUninitialized: true, //false for implementing login sessions
+    resave: true, //true saves the ssesion back to DB even if unmodified
+    secret: process.env.SESSION_SECRET,
+    store: new MongoStore({
+        mongooseConnection: mongoose.connection //use an existing mongoose con
+    }),
+    cookie: {
+        path: "/",
+        maxAge: 1000 * 60 * 10, //24 hours
+        sameSite: 'strict',
+        secure: false //no https :(
+    }
+}));
+
 //Middleware
 app.use('/tickets', ticketsRoute);
 app.use('/', ticketCards);
@@ -34,19 +51,5 @@ mongoose.connect(process.env.DB_CONNECTION, {
         console.log('connected to DB');
     });
 
-//Authentication
-app.use(session({
-    saveUninitialized: false, //false for implementing login sessions
-    resave: false, //true saves the ssesion back to DB even if unmodified
-    secret: process.env.SESSION_SECRET,
-    store: new MongoStore({
-        mongooseConnection: mongoose.connection
-    }),
-    cookie: {
-        maxAge: 1000 * 60 * 60 * 24, //24 hours
-        sameSite: 'strict',
-        secure: false //no https :(
-    }
-}));
 
 app.listen(3002);

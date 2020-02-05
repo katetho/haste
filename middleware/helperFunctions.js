@@ -33,5 +33,21 @@ module.exports = {
                 item.timeLeft = "Ticket has expired"
             }
         }
+    },
+    redirectSignin: function(req, res, next) { //redirect unauthenticated users
+      if(req.session && !req.session.user) {
+        res.redirect('/users/signin')
+      }
+      else {
+        next();
+      }
+    },
+    redirectHome: function(req, res, next) { //redirect authenticated users
+      if(req.session && req.session.user) {
+        res.redirect('/')
+      }
+      else {
+        next();
+      }
     }
 }
