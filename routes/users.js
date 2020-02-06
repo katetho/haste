@@ -46,7 +46,7 @@ users.post('/register', helpers.redirectHome, async (req, res) => {
 
 users.get('/signin', helpers.redirectHome, async (req, res) => {
     try {
-        res.render('login', {
+        res.render('signin', {
             layout: 'users'
         });
     } catch (err) {
@@ -66,14 +66,14 @@ users.post('/signin', helpers.redirectHome, async (req, res) => {
             })
             if (user && user.password === req.body.password) { //if the user's present in the DB
                 req.session.user = user; //create this field & check for the presence of it
-                return res.redirect('/'); //when they're tring to access certain pages
+                res.json(user.fullName); //when they're tring to access certain pages
             }
-            res.json('not found')
+            else {
+              res.status(401).json("Wrong email or password")
+            }
         } else {
             res.status(422)
-                .json({
-                    error: "missing email or password"
-                })
+                .json("Missing email or password")
         }
     } catch (err) {
         res.json({

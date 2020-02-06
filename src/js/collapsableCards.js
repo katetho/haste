@@ -1,5 +1,4 @@
-(function() {
-    let header = document.getElementsByClassName("d-block");
+let header = document.getElementsByClassName("d-block");
     let cardBody = document.getElementsByClassName("collapse show");
 
 
@@ -33,4 +32,3 @@
             el.style.height = el.scrollHeight + 'px';
         }
     }
-})();

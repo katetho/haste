@@ -1,11 +1,10 @@
-(function() {
     let newTicketBtn = document.getElementsByClassName('new-ticket')[0];
     let bgModal = document.getElementsByClassName('bg-modal')[0];
     let contents = document.getElementsByClassName('modal-contents')[0];
     let closeBtn = document.getElementsByClassName('close-bg-modal')[0];
     let page = document.getElementsByTagName('main')[0];
     let form = document.getElementsByClassName('ticket-form')[0];
-    let submit = document.getElementsByClassName('submit')[0];
+    let submit = document.getElementsByClassName('submit-ticket')[0];
     let deadline = document.getElementById('deadline');
     let tooltiptext = document.getElementsByClassName('tooltiptext')[0];
 
@@ -79,4 +78,3 @@
     }
 
     localStorage.setItem('Modified', document.lastModified)
-})()
