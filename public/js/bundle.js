@@ -94,19 +94,187 @@
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"default\", function() { return authenticate; });\n/* harmony import */ var _authRequests__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./authRequests */ \"./src/js/authRequests.js\");\n\r\n\r\nfunction signin() {\r\n    let userForm = document.querySelector(\".user\");\r\n    let email = userForm.querySelector(\"input[type=email]\");\r\n    let password = userForm.querySelector(\"input[type=password]\");\r\n    let submitSignin = userForm.querySelector(\".btn-user\");\r\n\r\n    submitSignin.onclick = function() {\r\n        let user = {\r\n            email: email.value,\r\n            password: password.value\r\n        }\r\n        Object(_authRequests__WEBPACK_IMPORTED_MODULE_0__[\"default\"])(user);\r\n    }\r\n}\r\n\r\nfunction authenticate() {\r\n    if (window.location.pathname === \"/users/signin\") {\r\n        signin();\r\n    }\r\n}\r\n\n\n//# sourceURL=webpack:///./src/js/auth.js?");
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return authenticate; });
+/* harmony import */ var _authReq__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./authReq */ "./src/js/authReq.js");
+
+
+function signin() {
+    let welcomeTxt = document.querySelector('.welcome-txt')
+    let userForm = document.querySelector('.user');
+    let email = userForm.querySelector('input[type=email]');
+    let password = userForm.querySelector('input[type=password]');
+    let submitSignin = userForm.querySelector('.btn-user');
+
+    if (sessionStorage.registered) {
+        welcomeTxt.innerHTML = sessionStorage.registered;
+    }
+    submitSignin.onclick = function() {
+        let user = {
+            email: email.value,
+            password: password.value
+        }
+        Object(_authReq__WEBPACK_IMPORTED_MODULE_0__["default"])(user);
+    }
+}
+
+function authenticate() {
+    if (window.location.pathname === "/users/signin") {
+        signin();
+    }
+}
+
 
 /***/ }),
 
-/***/ "./src/js/authRequests.js":
-/*!********************************!*\
-  !*** ./src/js/authRequests.js ***!
-  \********************************/
+/***/ "./src/js/authReq.js":
+/*!***************************!*\
+  !*** ./src/js/authReq.js ***!
+  \***************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"default\", function() { return postAuth; });\nfunction postAuth(userCredentials) {\r\n    let username = \"\";\r\n    let xhr = new XMLHttpRequest();\r\n    xhr.open(\"POST\", \"/users/signin\",true);\r\n    xhr.setRequestHeader(\"Content-Type\", \"application/json\");\r\n    xhr.send(JSON.stringify(userCredentials))\r\n    xhr.onload = function() {\r\n      if(xhr.status===200) {\r\n        username=xhr.response;\r\n        window.location.replace('/')\r\n      }\r\n      if(xhr.status===401) { //user doesn't exist\r\n        console.log(JSON.parse(xhr.response))\r\n        //tooltip+red border\r\n      }\r\n      if(xhr.status===422) { //missing data\r\n        console.log(JSON.parse(xhr.response))\r\n        //tooltip+red border\r\n      }\r\n    }\r\n    return username;\r\n  }\r\n\n\n//# sourceURL=webpack:///./src/js/authRequests.js?");
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return postAuth; });
+function postAuth(userCredentials) {
+    let username = "";
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", "/users/signin",true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.send(JSON.stringify(userCredentials))
+    xhr.onload = function() {
+      if(xhr.status===200) {
+        username=xhr.response;
+        window.location.replace('/')
+      }
+      if(xhr.status===401) { //user doesn't exist
+        console.log(JSON.parse(xhr.response))
+        //tooltip+red border
+      }
+      if(xhr.status===422) { //missing data
+        console.log(JSON.parse(xhr.response))
+        //tooltip+red border
+      }
+    }
+    return username;
+  }
+
+
+/***/ }),
+
+/***/ "./src/js/collapsableCards.js":
+/*!************************************!*\
+  !*** ./src/js/collapsableCards.js ***!
+  \************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return collapsables; });
+let header = document.getElementsByClassName("d-block");
+let cardBody = document.getElementsByClassName("collapse show");
+
+function showHide(el) {
+    if (el.style.height !== '0px') {
+        el.style.height = '0px';
+    } else {
+        el.style.display = 'block'; // Make it visible
+        el.style.height = el.scrollHeight + 'px';
+    }
+}
+
+function fixHeight(el) {
+    if (el.style.height !== '0px') {
+        el.style.height = el.scrollHeight + 'px';
+    }
+}
+
+function collapsables() {
+  for (let i = 0; i < header.length; i++) {
+      header[i].addEventListener("click", function() {
+          this.classList.toggle("active");
+          let panel = this.nextElementSibling;
+          fixHeight(panel);
+          setTimeout(showHide, 0, panel); //showHide must execute after fixHeight
+      }); //otherwise height won't have a pixel value, and the transition wouldnt occur
+  } //try promises again
+
+  window.addEventListener("resize", function() {
+      for (let i = 0; i < cardBody.length; i++) {
+          if (cardBody[i].style.height !== '0px')
+              cardBody[i].style.height = 'auto';
+      }
+  });
+}
+
+
+/***/ }),
+
+/***/ "./src/js/dropdowns.js":
+/*!*****************************!*\
+  !*** ./src/js/dropdowns.js ***!
+  \*****************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return dropdowns; });
+let dropDowns = document.getElementsByClassName("nav-link");
+let navbarSide = document.getElementsByClassName("navbar-nav")[0];
+let pageTopBtn = document.getElementById("sidebarToggleTop");
+let pageTop = document.getElementById("page-top");
+
+for (let i = 0; i < dropDowns.length; i++) {
+    dropDowns[i].addEventListener('click', showToggle)
+}
+
+function showToggle(e) {
+    let el = e.currentTarget;
+    el.classList.toggle("show");
+    if (el.nextElementSibling) {
+        el.nextElementSibling.classList.toggle("show");
+    }
+    el["aria-expanded"] = !el["aria-expanded"]
+}
+
+function dropdowns() {
+    pageTopBtn.onclick = function() {
+        pageTop.classList.toggle('sidebar-toggled');
+        navbarSide.classList.toggle('toggled');
+    }
+}
+
+
+/***/ }),
+
+/***/ "./src/js/home.js":
+/*!************************!*\
+  !*** ./src/js/home.js ***!
+  \************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return home; });
+/* harmony import */ var _collapsableCards__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./collapsableCards */ "./src/js/collapsableCards.js");
+/* harmony import */ var _dropdowns__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./dropdowns */ "./src/js/dropdowns.js");
+/* harmony import */ var _ticketModal__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ticketModal */ "./src/js/ticketModal.js");
+
+
+
+
+function home() {
+  if (window.location.pathname==="/") {
+    Object(_collapsableCards__WEBPACK_IMPORTED_MODULE_0__["default"])();
+    Object(_dropdowns__WEBPACK_IMPORTED_MODULE_1__["default"])();
+    Object(_ticketModal__WEBPACK_IMPORTED_MODULE_2__["default"])();
+  }
+}
+
 
 /***/ }),
 
@@ -118,8 +286,289 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) *
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _auth__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./auth */ \"./src/js/auth.js\");\n\r\n\r\nObject(_auth__WEBPACK_IMPORTED_MODULE_0__[\"default\"])();\r\n\n\n//# sourceURL=webpack:///./src/js/main.js?");
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _auth__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./auth */ "./src/js/auth.js");
+/* harmony import */ var _home__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./home */ "./src/js/home.js");
+/* harmony import */ var _register__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./register */ "./src/js/register.js");
+
+
+
+
+Object(_auth__WEBPACK_IMPORTED_MODULE_0__["default"])();
+Object(_home__WEBPACK_IMPORTED_MODULE_1__["default"])();
+Object(_register__WEBPACK_IMPORTED_MODULE_2__["default"])();
+
+
+/***/ }),
+
+/***/ "./src/js/register.js":
+/*!****************************!*\
+  !*** ./src/js/register.js ***!
+  \****************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return register; });
+/* harmony import */ var _registerReq__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./registerReq */ "./src/js/registerReq.js");
+/* harmony import */ var _userClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./userClass */ "./src/js/userClass.js");
+
+
+let User = Object(_userClass__WEBPACK_IMPORTED_MODULE_1__["default"])();
+
+async function registerForm() {
+    let form = document.getElementsByClassName('user-register')[0];
+    let inputs = form.querySelectorAll('input, select');
+    let registerBtn = form.querySelector('.btn-user')
+    registerBtn.onclick = function() {
+        sessionStorage.removeItem('registered');
+        let user = [];
+        //for...in iterated through
+        //non-enumerable props in this case
+        for (let input of inputs) {
+            if (input['id'] !== 'repeatPassword') {
+                user.push(input.value);
+            }
+        }
+        Object(_registerReq__WEBPACK_IMPORTED_MODULE_0__["default"])(new User(...user));
+    }
+}
+
+function register() {
+    if (window.location.pathname === "/users/register") {
+        registerForm();
+    }
+}
+
+
+/***/ }),
+
+/***/ "./src/js/registerReq.js":
+/*!*******************************!*\
+  !*** ./src/js/registerReq.js ***!
+  \*******************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return postRegister; });
+function postRegister(user) {
+    let form = document.getElementsByClassName('user-register')[0];
+    let inputs = form.querySelectorAll('input, select');
+    let xhr = new XMLHttpRequest();
+    xhr.open('POST', '/users/register');
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(JSON.stringify(user));
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            //for replacing 'Welcome!' in the signin form with the below text
+            sessionStorage.registered = 'You have been registered successfully! Now you can sign in here';
+            window.location.replace('/users/signin');
+        }
+        if (xhr.status === 422) {
+            let invalidFields = JSON.parse(xhr.response);
+            let pas = form.querySelector('#password')
+                .value;
+            for (let input of inputs) {
+                let passesDontMatch = (input.id === 'repeatPassword' && input.value !== pas);
+                if (invalidFields.includes(input.id) || passesDontMatch) {
+                    let tooltipTxt = input.parentNode.getAttribute('data')
+                    input.parentNode.setAttribute('data-tooltip', tooltipTxt);
+                    input.style.borderColor = 'red';
+                } else {
+                    input.style.borderColor = '#CFD8DC';
+                    input.parentNode.removeAttribute('data-tooltip');
+                }
+            }
+        }
+    }
+}
+
+
+/***/ }),
+
+/***/ "./src/js/ticketClass.js":
+/*!*******************************!*\
+  !*** ./src/js/ticketClass.js ***!
+  \*******************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ticketClass; });
+function ticketClass() {
+  return function Ticket(title, department, priority, deadline, description) {
+    this.title = title;
+    this.department = department;
+    this.priority = priority;
+    this.deadline = deadline;
+    this.description = description;
+  }
+}
+
+
+/***/ }),
+
+/***/ "./src/js/ticketModal.js":
+/*!*******************************!*\
+  !*** ./src/js/ticketModal.js ***!
+  \*******************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ticketModal; });
+/* harmony import */ var _ticketClass__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ticketClass */ "./src/js/ticketClass.js");
+/* harmony import */ var _ticketsReq__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ticketsReq */ "./src/js/ticketsReq.js");
+
+
+let Ticket = Object(_ticketClass__WEBPACK_IMPORTED_MODULE_0__["default"])();
+
+    let newTicketBtn = document.getElementsByClassName('new-ticket')[0];
+    let bgModal = document.getElementsByClassName('bg-modal')[0];
+    let contents = document.getElementsByClassName('modal-contents')[0];
+    let closeBtn = document.getElementsByClassName('close-bg-modal')[0];
+    let page = document.getElementsByTagName('main')[0];
+    let form = document.getElementsByClassName('ticket-form')[0];
+    let submit = document.getElementsByClassName('submit-ticket')[0];
+    let deadline = document.getElementById('deadline');
+    let tooltiptext = document.getElementsByClassName('tooltiptext')[0];
+
+    function centerModal() {
+        let width = contents.getBoundingClientRect()
+            .width;
+        let height = contents.getBoundingClientRect()
+            .height;
+        scrollTo({
+            top: contents.offsetTop - height / 5,
+            left: contents.offsetLeft - width / 5,
+            behavior: 'smooth'
+        });
+    }
+
+    function ticketModal() {
+    submit.onclick = function(event) {
+        let inputs = form.querySelectorAll('input, select, textarea'); //get all inputs
+        let title = inputs[0];
+        let inputCount = 0;
+        for (let input of inputs) { //don't iterate through "form" - too many elements
+            if (input.value === "") {
+                input.style.borderColor = 'red'; //outline empty fields
+            } else {
+                inputCount++;
+                input.style.borderColor = '#CFD8DC';
+                if (inputCount === inputs.length) {
+                    let ticketsArr = []
+                    for (let input of inputs) {
+                        let val = input.value;
+                        if (input.id === 'description' || input.id === 'title') {
+                            val = val.slice(0, 1)
+                                .toUpperCase() + val.slice(1, val.length);
+                        }
+                        ticketsArr.push(val);
+                    }
+                    if (title.value.length > 35) {
+                        title.style.borderColor = 'red';
+                        tooltiptext.style.opacity = 1;
+                    } else {
+
+                      Object(_ticketsReq__WEBPACK_IMPORTED_MODULE_1__["default"])(new Ticket(...ticketsArr)); //ES6, for ES5 - loop through
+                        bgModal.style.display = "none";
+                        page.className = '';
+                    }
+                }
+            }
+        }
+    }
+
+    newTicketBtn.onclick = function() {
+        tooltiptext.style.opacity = 0;
+        bgModal.style.display = "flex";
+        page.className = 'blur'
+        centerModal();
+    }
+
+    window.onresize = function() {
+        centerModal();
+    }
+
+    closeBtn.onclick = function() {
+        bgModal.style.display = "none";
+        page.className = '';
+    }
+
+    deadline.onfocus = function() { //let the user choose a date onfocus
+        this.type = "date";
+    }
+
+    deadline.onblur = function() { //show the placeholder onblur
+        this.type = "text";
+    }
+
+        localStorage.setItem('Modified', document.lastModified)
+}
+
+
+/***/ }),
+
+/***/ "./src/js/ticketsReq.js":
+/*!******************************!*\
+  !*** ./src/js/ticketsReq.js ***!
+  \******************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return postTicket; });
+function postTicket(obj) {
+      let xhr = new XMLHttpRequest();
+      xhr.open('POST', 'http://localhost:3002/tickets', true);
+      xhr.setRequestHeader("Content-Type", "application/json");
+      xhr.responseType = 'document';
+      xhr.onload = function() {
+          if (this.status == 200) {
+              let tickets = this.response;
+              document
+                  .getElementsByClassName('collapsable-section')[0]
+                  .innerHTML = tickets
+                  .getElementsByClassName('collapsable-section')[0]
+                  .innerHTML;
+          }
+      }
+      xhr.send(JSON.stringify(obj));
+  }
+
+
+/***/ }),
+
+/***/ "./src/js/userClass.js":
+/*!*****************************!*\
+  !*** ./src/js/userClass.js ***!
+  \*****************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return userClass; });
+function userClass() {
+  return function User(firstName, lastName, email, department, password, role) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.email = email;
+    this.department = department;
+    this.password = password;
+    this.role = role || 'member';
+  }
+}
+
 
 /***/ })
 
 /******/ });
+//# sourceMappingURL=bundle.js.map

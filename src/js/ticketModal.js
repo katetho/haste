@@ -1,3 +1,7 @@
+import ticketClass from './ticketClass';
+import postTicket from './ticketsReq';
+let Ticket = ticketClass();
+
     let newTicketBtn = document.getElementsByClassName('new-ticket')[0];
     let bgModal = document.getElementsByClassName('bg-modal')[0];
     let contents = document.getElementsByClassName('modal-contents')[0];
@@ -8,6 +12,19 @@
     let deadline = document.getElementById('deadline');
     let tooltiptext = document.getElementsByClassName('tooltiptext')[0];
 
+    function centerModal() {
+        let width = contents.getBoundingClientRect()
+            .width;
+        let height = contents.getBoundingClientRect()
+            .height;
+        scrollTo({
+            top: contents.offsetTop - height / 5,
+            left: contents.offsetLeft - width / 5,
+            behavior: 'smooth'
+        });
+    }
+
+    export default function ticketModal() {
     submit.onclick = function(event) {
         let inputs = form.querySelectorAll('input, select, textarea'); //get all inputs
         let title = inputs[0];
@@ -32,25 +49,14 @@
                         title.style.borderColor = 'red';
                         tooltiptext.style.opacity = 1;
                     } else {
-                        postTicket(new Ticket(...ticketsArr)); //ES6, for ES5 - loop through
+
+                      postTicket(new Ticket(...ticketsArr)); //ES6, for ES5 - loop through
                         bgModal.style.display = "none";
                         page.className = '';
                     }
                 }
             }
         }
-    }
-
-    function centerModal() {
-        let width = contents.getBoundingClientRect()
-            .width;
-        let height = contents.getBoundingClientRect()
-            .height;
-        scrollTo({
-            top: contents.offsetTop - height / 5,
-            left: contents.offsetLeft - width / 5,
-            behavior: 'smooth'
-        });
     }
 
     newTicketBtn.onclick = function() {
@@ -77,4 +83,5 @@
         this.type = "text";
     }
 
-    localStorage.setItem('Modified', document.lastModified)
+        localStorage.setItem('Modified', document.lastModified)
+}

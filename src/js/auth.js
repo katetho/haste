@@ -1,11 +1,15 @@
-import postAuth from './authRequests';
+import postAuth from './authReq';
 
 function signin() {
-    let userForm = document.querySelector(".user");
-    let email = userForm.querySelector("input[type=email]");
-    let password = userForm.querySelector("input[type=password]");
-    let submitSignin = userForm.querySelector(".btn-user");
+    let welcomeTxt = document.querySelector('.welcome-txt')
+    let userForm = document.querySelector('.user');
+    let email = userForm.querySelector('input[type=email]');
+    let password = userForm.querySelector('input[type=password]');
+    let submitSignin = userForm.querySelector('.btn-user');
 
+    if (sessionStorage.registered) {
+        welcomeTxt.innerHTML = sessionStorage.registered;
+    }
     submitSignin.onclick = function() {
         let user = {
             email: email.value,

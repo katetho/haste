@@ -3,6 +3,7 @@ const users = express();
 const path = require('path');
 const User = require('../models/User');
 const helpers = require('../middleware/helperFunctions');
+const validate = require('../middleware/validators');
 
 users.set('views', path.join(__dirname, '../views'));
 
@@ -19,9 +20,32 @@ users.get('/register', async (req, res) => {
 })
 
 users.post('/register', helpers.redirectHome, async (req, res) => {
+    let invalid = [];
+
+    if (!validate.name(req.body.firstName)) {
+        invalid.push('firstName');
+    }
+    if (!validate.name(req.body.lastName)) {
+        invalid.push('lastName');
+    }
+    if (!validate.password(req.body.password)) {
+        invalid.push('password');
+    }
+    if (!validate.email(req.body.email)) {
+        invalid.push('email');
+    }
+    if (!validate.department(req.body.department)) {
+        invalid.push('department');
+    }
+    if (invalid.length) {
+        return res.status(422)
+            .json(invalid);
+    }
     const user = new User({
-        fullName: req.body.fullName,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
         email: req.body.email,
+        department: req.body.department,
         password: req.body.password,
         role: req.body.role
     });
@@ -29,11 +53,10 @@ users.post('/register', helpers.redirectHome, async (req, res) => {
         let exists = await User.find({
             email: req.body.email
         });
-        if (!exists) {
+        // if([]) - true; if([]==false) - true as well
+        //[] is interpreted as 0 by '==', and 'if' converts any existing object to true
+        if (!exists.length) {
             const savedUser = user.save();
-            res.render('<h1>Check your email!</h1>', {
-                layout: 'users'
-            });
         } else {
             res.json('user exists')
         }
@@ -66,10 +89,10 @@ users.post('/signin', helpers.redirectHome, async (req, res) => {
             })
             if (user && user.password === req.body.password) { //if the user's present in the DB
                 req.session.user = user; //create this field & check for the presence of it
-                res.json(user.fullName); //when they're tring to access certain pages
-            }
-            else {
-              res.status(401).json("Wrong email or password")
+                res.json(user.firstName); //when they're tring to access certain pages
+            } else {
+                res.status(401)
+                    .json("Wrong email or password")
             }
         } else {
             res.status(422)

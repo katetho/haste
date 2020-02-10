@@ -49,8 +49,8 @@ gulp.task('watch', function() {
         files: ["public/**/*.*"],
         port: 5000,
 	});
-  gulp.watch('src/views/*.handlebars', ['htmls']),
-  gulp.watch('src/views/layouts/*.handlebars', ['htmls']),
-  gulp.watch('src/views/partials/*.handlebars', ['htmls']),
+  gulp.watch('views/*.handlebars', ['htmls']),
+  gulp.watch('views/layouts/*.handlebars', ['htmls']),
+  gulp.watch('views/partials/*.handlebars', ['htmls']),
   gulp.watch('src/scss/**/*.scss', ['sass'])
 })
