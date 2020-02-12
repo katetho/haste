@@ -1,5 +1,5 @@
 <b>Project Description</b><br/>
-	Haste is a simple ticketing system, that would allow an organization to keep track of tasks and issues in the company. A user will be able to create, assign, track and take tasks.
+	Haste is a simple ticketing system that would allow an organization to keep track of tasks and issues in the company. A user will be able to create, assign, track and take tasks.
 	
 <b>How to run this project</b><br/>
 	1.	Pull this project, open up your command line and type either “npm run dev” or “npm run build” ( production build).<br/>
