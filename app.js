@@ -22,7 +22,7 @@ app.use(cors());
 
 //Authentication
 app.use(session({
-    name: "sid",
+    name: process.env.SESSION_NAME,
     saveUninitialized: true, //false for implementing login sessions
     resave: true, //true saves the ssesion back to DB even if unmodified
     secret: process.env.SESSION_SECRET,
@@ -31,7 +31,7 @@ app.use(session({
     }),
     cookie: {
         path: "/",
-        maxAge: 1000 * 60 * 10, //24 hours
+        maxAge: 1000 * 60 * 10, //10 minutes
         sameSite: 'strict',
         secure: false //no https :(
     }

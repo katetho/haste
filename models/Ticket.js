@@ -24,6 +24,10 @@ const TicketSchema = mongoose.Schema({
 	date: {
 		type: Date,
 		default: Date.now
+	},
+	assignee: {
+		type: String,
+		default: 'none'
 	}
 });
 

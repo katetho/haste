@@ -5,10 +5,12 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start-webpack": "npx webpack",
-    "start-server": "nodemon app.js",
-    "start-gulp": "gulp watch",
-    "dev": "concurrently \"npm run start-gulp\" \"npm run start-webpack\" \"npm run start-server\""
+    "dev-webpack": "webpack --open --config webpack.dev.js",
+    "prod-webpack": "webpack --config webpack.prod.js",
+    "server": "nodemon app.js",
+    "dev-gulp": "gulp watch",
+    "dev": "concurrently \"npm run dev-gulp\" \"npm run dev-webpack\" \"npm run server\"",
+    "build": "concurrently \"npm run dev-gulp\" \"npm run prod-webpack\" \"npm run server\""
   },
   "repository": {
     "type": "git",
@@ -48,6 +50,8 @@
     "gulp-sass": "^4.0.2",
     "gulp-uglify": "^3.0.2",
     "gulp-uglify-es": "^2.0.0",
-    "uglify": "^0.1.5"
+    "uglify": "^0.1.5",
+    "webpack-cli": "^3.0.1",
+    "webpack-merge": "^4.2.2"
   }
 }
