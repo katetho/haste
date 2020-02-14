@@ -260,9 +260,9 @@
                                         Activity Log
                                     </a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                    <a class="dropdown-item" href="/users/signout" data-toggle="modal">
                                         <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                        Logout
+                                        Sign out
                                     </a>
                                 </div>
                             </li>
@@ -293,8 +293,7 @@
             <header class="ticket-header">Create a ticket</header>
             <fieldset class="ticket-fieldset">
                 <div class="row">
-                    <div class="col tooltip">
-                      <span class="tooltiptext">No more than 35 characters</span>
+                    <div class="col tooltip" data="No more than 35 characters">
                         <input placeholder="Title" class="text-field title" type="text" id="title">
                     </div>
                     <div class="col">

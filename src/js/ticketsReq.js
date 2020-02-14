@@ -1,3 +1,5 @@
+import collapsables from './collapsableCards';
+
 export default function postTicket(obj) {
       let xhr = new XMLHttpRequest();
       xhr.open('POST', 'http://localhost:3002/tickets', true);
@@ -7,10 +9,11 @@ export default function postTicket(obj) {
           if (this.status == 200) {
               let tickets = this.response;
               document
-                  .getElementsByClassName('collapsable-section')[0]
+                  .getElementsByClassName('tickets-display')[0]
                   .innerHTML = tickets
-                  .getElementsByClassName('collapsable-section')[0]
-                  .innerHTML;
+                  .getElementsByClassName('tickets-display')[0]
+                  .innerHTML; //this chunk of dom is generated after the scripts are added
+                  collapsables(); //so thw earlier scripts won't work
           }
       }
       xhr.send(JSON.stringify(obj));

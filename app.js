@@ -31,7 +31,7 @@ app.use(session({
     }),
     cookie: {
         path: "/",
-        maxAge: 1000 * 60 * 10, //10 minutes
+        maxAge: 1000 * 60 * 100, //10 minutes
         sameSite: 'strict',
         secure: false //no https :(
     }

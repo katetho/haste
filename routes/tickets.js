@@ -24,7 +24,7 @@ router.post('/', async (req, res) => {
         description: req.body.description
     });
     try {
-        const savedTicket = ticket.save();
+        const savedTicket = await ticket.save();
         const tickets = await Ticket.find()
         helpers.distribute(tickets);
         helpers.ticketTime(tickets);
@@ -37,6 +37,7 @@ router.post('/', async (req, res) => {
         res.json({
             message: err
         })
+        console.log(err);
     }
 });
 

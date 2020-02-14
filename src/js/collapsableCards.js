@@ -18,11 +18,12 @@ function fixHeight(el) {
 
 export default function collapsables() {
   for (let i = 0; i < header.length; i++) {
-      header[i].addEventListener("click", function() {
-          this.classList.toggle("active");
-          let panel = this.nextElementSibling;
-          fixHeight(panel);
-          setTimeout(showHide, 0, panel); //showHide must execute after fixHeight
+        header[i].addEventListener("click", function(e) {
+        e.preventDefault();
+        this.classList.toggle("active");
+        let panel = this.nextElementSibling;
+        fixHeight(panel);
+        setTimeout(showHide, 0, panel); //showHide must execute after fixHeight
       }); //otherwise height won't have a pixel value, and the transition wouldnt occur
   } //try promises again
 

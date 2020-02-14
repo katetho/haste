@@ -15,7 +15,10 @@ cards.get('/', helpers.redirectSignin, async (req, res) => {
             tickets: tickets
         });
     } catch (err) {
-        res.send(err);
+        res.render('home', {
+        title: 'Tickets'
+    });
+    console.log(err);
     }
 })
 
