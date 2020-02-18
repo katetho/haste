@@ -10553,6 +10553,10 @@ a:focus {
   padding: 0.5rem 1rem;
 }
 
+.btn-take-ticket {
+  line-height: 1;
+}
+
 .dropdown .dropdown-menu {
   font-size: 0.85rem;
 }

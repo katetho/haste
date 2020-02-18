@@ -1,4 +1,5 @@
 import collapsables from './collapsableCards';
+import ticketTakeReq from './ticketTakeReq';
 
 export default function postTicket(obj) {
       let xhr = new XMLHttpRequest();
@@ -13,7 +14,8 @@ export default function postTicket(obj) {
                   .innerHTML = tickets
                   .getElementsByClassName('tickets-display')[0]
                   .innerHTML; //this chunk of dom is generated after the scripts are added
-                  collapsables(); //so thw earlier scripts won't work
+                  collapsables(); //so the earlier scripts won't work
+                  ticketTakeReq();
           }
       }
       xhr.send(JSON.stringify(obj));

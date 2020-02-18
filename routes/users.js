@@ -1,6 +1,7 @@
 const express = require('express');
 const users = express();
 const path = require('path');
+const Base64 = require('js-base64').Base64;
 const User = require('../models/User');
 const helpers = require('../middleware/helperFunctions');
 const validate = require('../middleware/validators');
@@ -86,7 +87,8 @@ users.post('/signin', helpers.redirectHome, async (req, res) => {
             })
             if (user && user.password === req.body.password) { //if the user's present in the DB
                 req.session.user = user; //create this field & check for the presence of it
-                res.json(user.firstName); //when they're tring to access certain pages
+                let username = Base64.encode(user.firstName + ' ' + user.lastName);
+                res.json(username); //when they're tring to access certain pages
             } else {
                 let wrong = [];
                 if (!user) {

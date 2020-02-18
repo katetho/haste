@@ -7,8 +7,9 @@ export default function postRegister(user) {
     xhr.send(JSON.stringify(user));
     xhr.onload = function() {
         if (xhr.status === 200) {
-            //for replacing 'Welcome!' in the signin form with the below text
-            sessionStorage.registered = 'You have been registered successfully! Now you can sign in here';
+            //for replacing 'Welcome!' in the signin form with the below text, sessionStorage.registered
+            sessionStorage
+            .rggd = btoa('You have been registered successfully! Now you can sign in here'); //encode with base64
             window.location.replace('/users/signin');
         }
         if (xhr.status === 422) {

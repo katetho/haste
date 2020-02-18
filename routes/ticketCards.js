@@ -10,15 +10,16 @@ cards.get('/', helpers.redirectSignin, async (req, res) => {
         const tickets = await Ticket.find();
         helpers.distribute(tickets);
         helpers.ticketTime(tickets);
+        helpers.encodeIDs(tickets);
         res.render('home', {
             title: 'Tickets',
             tickets: tickets
         });
     } catch (err) {
         res.render('home', {
-        title: 'Tickets'
-    });
-    console.log(err);
+            title: 'Tickets'
+        });
+        console.log(err);
     }
 })
 

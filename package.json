@@ -36,6 +36,7 @@
     "express-session": "^1.17.0",
     "gulp-terser": "^1.2.0",
     "handlebars": "^4.5.3",
+    "js-base64": "^2.5.2",
     "mongoose": "^5.8.1",
     "nodemon": "^2.0.2",
     "webpack": "^4.41.6"

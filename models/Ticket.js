@@ -27,7 +27,7 @@ const TicketSchema = mongoose.Schema({
 	},
 	assignee: {
 		type: String,
-		default: 'none'
+		required: false
 	}
 });
 

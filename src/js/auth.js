@@ -7,8 +7,8 @@ function signin() {
     let password = userForm.querySelector('input[type=password]');
     let submitSignin = userForm.querySelector('.btn-user');
 
-    if (sessionStorage.registered) {
-        welcomeTxt.innerHTML = sessionStorage.registered;
+    if (sessionStorage.rggd) {
+        welcomeTxt.innerHTML = atob(sessionStorage.rggd); //decode from base64
     }
     submitSignin.onclick = function() {
         let user = {

@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const Base64 = require('js-base64').Base64;
 const Ticket = require('../models/Ticket')
 const path = require('path');
 const helpers = require('../middleware/helperFunctions');
@@ -28,6 +29,7 @@ router.post('/', async (req, res) => {
         const tickets = await Ticket.find()
         helpers.distribute(tickets);
         helpers.ticketTime(tickets);
+        helpers.encodeIDs(tickets);
         res.render('home', {
             title: 'Tickets',
             tickets: tickets,
@@ -68,15 +70,15 @@ router.delete('/:ticketId', async (req, res) => {
 
 router.patch('/:ticketId', async (req, res) => {
     try {
-        const updatedTicket = await Ticket.updateOne({
-            id: req.params.ticketId,
-            title: req.body.title,
-            department: req.body.department,
-            priority: req.body.priority,
-            deadline: req.body.deadline,
-            description: req.body.description
+        let decodedID = Base64.decode(req.params.ticketId);
+        const filter = {
+            _id: decodedID
+        };
+        const updatedTicket = await Ticket.updateOne(filter, {
+            //add editable description, title and deadline
+            assignee: req.body.assignee //when a person hits 'take'
         })
-        res.json(req.body)
+        res.json(updatedTicket)
     } catch (err) {
         res.json({
             message: err

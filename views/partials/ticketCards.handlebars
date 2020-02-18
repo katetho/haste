@@ -17,9 +17,22 @@
         <div class="collapse show" id="collapseCardExample">
             <div class="card-body">
                 {{description}}
-                <div class="deadline-date">
-                <text class="font-weight-bold text-warning">Deadline:</text> {{deadlineUI}}
+                  <div class="row">
+                <div class="deadline-date d-flex justify-content-center align-items-center">
+                <text class="font-weight-bold text-warning center-text">Deadline:</text> {{deadlineUI}}
+                </div>
+              <div class="d-flex justify-content-center">
+                {{#if assignee}}
+                <a id={{encodedID}} href='#'>
+                    Assigned to: {{assignee}}
+                </a>
+                {{else}}
+                <div id={{encodedID}} class="btn btn-success text-center btn-take-ticket">
+                    <span class="text">Take</span>
+                </div>
+                {{/if}}
               </div>
+            </div>
             </div>
         </div>
     </div>
