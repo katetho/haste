@@ -1,10 +1,14 @@
 let path = require('path');
-console.log(__dirname + "/src/js/main.js")
+
 module.exports = {
 watch: true,
-  entry: path.resolve(__dirname + "/src/js/main.js"),
+  entry: {
+    'home': path.resolve(__dirname + '/src/js/home.js'),
+    'signin': path.resolve(__dirname + '/src/js/auth.js'),
+    'register': path.resolve(__dirname + '/src/js/register.js'),
+  },
   output: {
-    path: path.resolve(__dirname + "/public/js"),
-    filename: "bundle.js"
+    path: path.resolve(__dirname + '/public/js'),
+    filename: 'bundle-[name].js'
   },
 }

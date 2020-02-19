@@ -1,14 +1,12 @@
 const express = require('express');
-const users = express();
+const router = express.Router();
 const path = require('path');
 const Base64 = require('js-base64').Base64;
 const User = require('../models/User');
 const helpers = require('../middleware/helperFunctions');
 const validate = require('../middleware/validators');
 
-users.set('views', path.join(__dirname, '../views'));
-
-users.get('/register', helpers.redirectHome, async (req, res) => {
+router.get('/register', helpers.redirectHome, async (req, res) => {
     try {
         res.render('register', {
             layout: 'users'
@@ -20,7 +18,7 @@ users.get('/register', helpers.redirectHome, async (req, res) => {
     }
 })
 
-users.post('/register', helpers.redirectHome, async (req, res) => {
+router.post('/register', helpers.redirectHome, async (req, res) => {
     const user = new User({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
@@ -65,7 +63,7 @@ users.post('/register', helpers.redirectHome, async (req, res) => {
     }
 })
 
-users.get('/signin', helpers.redirectHome, async (req, res) => {
+router.get('/signin', helpers.redirectHome, async (req, res) => {
     try {
         res.render('signin', {
             layout: 'users'
@@ -77,7 +75,7 @@ users.get('/signin', helpers.redirectHome, async (req, res) => {
     }
 })
 
-users.post('/signin', helpers.redirectHome, async (req, res) => {
+router.post('/signin', helpers.redirectHome, async (req, res) => {
     try {
         let email = req.body.email;
         let password = req.body.password;
@@ -118,7 +116,7 @@ users.post('/signin', helpers.redirectHome, async (req, res) => {
     }
 })
 
-users.get('/forgot-password', helpers.redirectHome, async (req, res) => {
+router.get('/forgot-password', helpers.redirectHome, async (req, res) => {
     try {
         res.render('forgotpass', {
             layout: 'users'
@@ -130,7 +128,7 @@ users.get('/forgot-password', helpers.redirectHome, async (req, res) => {
     }
 })
 
-users.get('/signout', helpers.redirectSignin, (req, res) => {
+router.get('/signout', helpers.redirectSignin, (req, res) => {
     req.session.destroy((err) => {
         if (err) {
             res.redirect('/');
@@ -140,4 +138,4 @@ users.get('/signout', helpers.redirectSignin, (req, res) => {
     });
 })
 
-module.exports = users;
+module.exports = router;

@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 require('dotenv/config');
 const ticketsRoute = require('./routes/tickets');
-const ticketCards = require('./routes/ticketCards');
+const homeRoute = require('./routes/home');
 const usersRoute = require('./routes/users');
 const cors = require('cors');
 const path = require('path');
@@ -39,7 +39,7 @@ app.use(session({
 
 //Middleware
 app.use('/tickets', ticketsRoute);
-app.use('/', ticketCards);
+app.use('/', homeRoute);
 app.use('/users', usersRoute);
 
 //Connect to DB

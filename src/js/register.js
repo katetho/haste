@@ -2,7 +2,7 @@ import postUser from './registerReq';
 import userClass from './userClass';
 let User = userClass();
 
-async function registerForm() {
+(function registerForm() {
     let form = document.getElementsByClassName('user-register')[0];
     let inputs = form.querySelectorAll('input, select');
     let registerBtn = form.querySelector('.btn-user')
@@ -18,10 +18,4 @@ async function registerForm() {
         }
         postUser(new User(...user));
     }
-}
-
-export default function register() {
-    if (window.location.pathname === "/users/register") {
-        registerForm();
-    }
-}
+})();

@@ -1,11 +1,11 @@
 const express = require('express');
-const cards = express();
+const router = express.Router();
 const Ticket = require('../models/Ticket')
 const path = require('path');
 const helpers = require('../middleware/helperFunctions');
 
 
-cards.get('/', helpers.redirectSignin, async (req, res) => {
+router.get('/', helpers.redirectSignin, async (req, res) => {
     try {
         const tickets = await Ticket.find();
         helpers.distribute(tickets);
@@ -23,4 +23,4 @@ cards.get('/', helpers.redirectSignin, async (req, res) => {
     }
 })
 
-module.exports = cards;
+module.exports = router;

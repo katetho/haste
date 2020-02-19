@@ -1,6 +1,6 @@
 import postAuth from './authReq';
 
-function signin() {
+(function signin() {
     let welcomeTxt = document.querySelector('.welcome-txt')
     let userForm = document.querySelector('.user');
     let email = userForm.querySelector('input[type=email]');
@@ -17,10 +17,4 @@ function signin() {
         }
         postAuth(user);
     }
-}
-
-export default function authenticate() {
-    if (window.location.pathname === "/users/signin") {
-        signin();
-    }
-}
+})();
