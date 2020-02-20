@@ -4,7 +4,7 @@ module.exports = {
     return regPattern.test(name)
   },
   password: function(pass) {
-    let regPattern = /^(?=\w*\d)(?=\w*[a-zA-Z])\w{8,}$/;
+    let regPattern = /^(?=\w*\d)(?=\w*[a-zA-Z])\w{8,50}$/; //bcrypt encrypts the first 72bytes
     return regPattern.test(pass);
   },
   email: function(email) {

@@ -1,6 +1,6 @@
 <b>Project Description</b><br/>
 	Haste is a simple ticketing system that would allow an organization to keep track of tasks and issues in the company. A user will be able to create, assign, track and take tasks.
-	
+
 <b>How to run this project</b><br/>
 	1.	Pull this project, open up your command line and type either “npm run dev” or “npm run build” ( production build).<br/>
 	2.	Connect to a database. Visit https://www.mongodb.com/cloud/atlas, register or login, create a DB, copy the connection string and paste it instead of the variable called ‘process.env.DB_CONNECTION’ in ‘app.js’.<br/>
@@ -24,8 +24,10 @@ https://www.npmjs.com/package/express-session <br/>
 	Creating and manipulating schemas:<br/>
 https://www.npmjs.com/package/mongoose<br/>
 	Webpack:<br/>
+https://sgom.es/posts/2018-01-18-multiple-routes-webpack/<br/>
 https://webpack.js.org/<br/>
 https://webpack.js.org/guides/production/<br/>
+https://webpack.js.org/guides/code-splitting/<br/>
 	Gulp:<br/>
 https://coder-coder.com/gulp-tutorial-beginners/<br/>
 	Github repos:<br/>
@@ -38,4 +40,6 @@ https://handlebarsjs.com/guide/partials.html#basic-partials<br/>
 https://handlebarsjs.com/guide/expressions.html#basic-usage<br/>
 	SB Admin 2 (the UI)<br/>
 https://startbootstrap.com/themes/sb-admin-2/<br/>
-
+	General:<br/>
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import<br/>
+https://www.npmjs.com/package/bcrypt<br/>

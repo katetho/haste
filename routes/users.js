@@ -5,6 +5,8 @@ const Base64 = require('js-base64').Base64;
 const User = require('../models/User');
 const helpers = require('../middleware/helperFunctions');
 const validate = require('../middleware/validators');
+const bcrypt = require('bcrypt');
+const saltRounds = 10; //for password hashing
 
 router.get('/register', helpers.redirectHome, async (req, res) => {
     try {
@@ -19,15 +21,6 @@ router.get('/register', helpers.redirectHome, async (req, res) => {
 })
 
 router.post('/register', helpers.redirectHome, async (req, res) => {
-    const user = new User({
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        email: req.body.email,
-        department: req.body.department,
-        password: req.body.password,
-        role: req.body.role
-    });
-
     try {
         let invalid = [];
         let exists = await User.find({
@@ -54,7 +47,18 @@ router.post('/register', helpers.redirectHome, async (req, res) => {
             return res.status(422)
                 .json(invalid);
         }
-        const savedUser = user.save();
+        bcrypt.hash(req.body.password, saltRounds)
+            .then((hash) => {
+                const user = new User({
+                    firstName: req.body.firstName,
+                    lastName: req.body.lastName,
+                    email: req.body.email,
+                    department: req.body.department,
+                    password: hash,
+                    role: req.body.role
+                });
+                const savedUser = user.save()
+            })
         res.json(user);
     } catch (err) {
         res.json({
@@ -83,21 +87,28 @@ router.post('/signin', helpers.redirectHome, async (req, res) => {
             const user = await User.findOne({
                 email: req.body.email
             })
-            if (user && user.password === req.body.password) { //if the user's present in the DB
-                req.session.user = user; //create this field & check for the presence of it
-                let username = Base64.encode(user.firstName + ' ' + user.lastName);
-                res.json(username); //when they're tring to access certain pages
-            } else {
-                let wrong = [];
-                if (!user) {
-                    wrong.push('email')
-                }
-                if (user && user.password !== req.body.password) {
-                    wrong.push('password');
-                }
-                res.status(401)
-                    .json(wrong) //send false if the password is wrong
-            }
+            let validPassword = false;
+            bcrypt.compare(req.body.password, user.password)
+                .then((result) => {
+                    validPassword = result
+
+                    if (user && validPassword) { //if the user's present in the DB
+                        req.session.user = user; //create this field & check for the presence of it
+                        let username = Base64.encode(user.firstName + ' ' + user.lastName);
+                        res.json(username); //when they're tring to access certain pages
+                    } else {
+                        let wrong = [];
+                        if (!user) {
+                            wrong.push('email')
+                        }
+                        if (user && user.password !== req.body.password) {
+                            wrong.push('password');
+                        }
+                        res.status(401)
+                            .json(wrong) //send false if the password is wrong
+                    }
+                })
+                .catch((err) => {});
         } else {
             let missing = [];
             if (!req.body.password) {
