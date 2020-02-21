@@ -27,9 +27,7 @@ router.post('/', async (req, res) => {
     try {
         const savedTicket = await ticket.save();
         const tickets = await Ticket.find()
-        helpers.distribute(tickets);
-        helpers.ticketTime(tickets);
-        helpers.encodeIDs(tickets);
+        helpers.ticketHandler(tickets);
         res.render('home', {
             title: 'Tickets',
             tickets: tickets,

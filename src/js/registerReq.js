@@ -17,8 +17,7 @@ export default function postRegister(user) {
             let pas = form.querySelector('#password')
                 .value;
             for (let input of inputs) {
-                let passesDontMatch = (input.id === 'repeatPassword' && input.value !== pas);
-                if (invalidFields.includes(input.id) || passesDontMatch) {
+                if (invalidFields.includes(input.id)) {
                     let tooltipTxt = input.parentNode.getAttribute('data')
                     input.parentNode.setAttribute('data-tooltip', tooltipTxt);
                     input.style.borderColor = 'red';

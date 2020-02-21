@@ -29,6 +29,7 @@ export default function postAuth(userCredentials) {
             let missing = JSON.parse(xhr.response);
             for (let field of fields) { //or missing[field] for es5
                 if (missing.includes(field.type)) {
+                    field.parentNode.removeAttribute('data-tooltip');
                     field.style.borderColor = 'red';
                 } else {
                     field.style.borderColor = '#CFD8DC';

@@ -26,6 +26,9 @@ router.post('/register', helpers.redirectHome, async (req, res) => {
         let exists = await User.find({
             email: req.body.email
         });
+        if (req.body.repPassword !== req.body.password) {
+            invalid.push('repeatPassword');
+        }
         if (!validate.name(req.body.firstName)) {
             invalid.push('firstName');
         }
@@ -79,36 +82,36 @@ router.get('/signin', helpers.redirectHome, async (req, res) => {
     }
 })
 
+
 router.post('/signin', helpers.redirectHome, async (req, res) => {
     try {
         let email = req.body.email;
         let password = req.body.password;
         if (email && password) {
+            let validPassword = false;
             const user = await User.findOne({
                 email: req.body.email
             })
-            let validPassword = false;
-            bcrypt.compare(req.body.password, user.password)
-                .then((result) => {
-                    validPassword = result
-
-                    if (user && validPassword) { //if the user's present in the DB
-                        req.session.user = user; //create this field & check for the presence of it
-                        let username = Base64.encode(user.firstName + ' ' + user.lastName);
-                        res.json(username); //when they're tring to access certain pages
-                    } else {
-                        let wrong = [];
-                        if (!user) {
-                            wrong.push('email')
+            if (user) {
+                bcrypt.compare(req.body.password, user.password)
+                    .then((result) => {
+                        validPassword = result;
+                        if (validPassword) { //if the user's present in the DB
+                            req.session.user = user; //create this field & check for the presence of it
+                            let username = Base64.encode(user.firstName + ' ' + user.lastName);
+                            res.json(username); //when they're tring to access certain pages
+                        } else {
+                          res.status(401)
+                            .json('password');
                         }
-                        if (user && user.password !== req.body.password) {
-                            wrong.push('password');
-                        }
-                        res.status(401)
-                            .json(wrong) //send false if the password is wrong
-                    }
-                })
-                .catch((err) => {});
+                    })
+                    .catch((err) => {
+                        console.log(err)
+                    });
+            } else {
+              res.status(401)
+                .json('email');
+            }
         } else {
             let missing = [];
             if (!req.body.password) {

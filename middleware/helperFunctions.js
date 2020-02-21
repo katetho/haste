@@ -41,6 +41,11 @@ module.exports = {
             item.encodedID = Base64.encode(item.id);
         })
     },
+    ticketHandler: function(items) {
+      this.distribute(items);
+      this.ticketTime(items);
+      this.encodeIDs(items);
+    },
     redirectSignin: function(req, res, next) { //redirect unauthenticated users
         if (req.session && !req.session.user) {
             res.redirect('/users/signin')
