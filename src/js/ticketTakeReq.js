@@ -1,3 +1,5 @@
+import modals from './Modals';
+
 let takeBtns = document.getElementsByClassName('btn-take-ticket');
 
 export default function ticketTakeReq() {
@@ -18,7 +20,10 @@ function assigneePatch() {
     xhr.send(JSON.stringify(user));
     xhr.onload = function() {
         if (this.status === 200) {
-            takeBtn.outerHTML = `<a id=${takeBtn.id} href="#"> Assigned to: ${assignee} </a>`;
+          takeBtn.innerHTML='Close';
+          takeBtn.classList.toggle('btn-close-ticket');
+          takeBtn.classList.toggle('btn-take-ticket');
         }
+        modals();
     }
 }

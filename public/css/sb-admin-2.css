@@ -10553,7 +10553,7 @@ a:focus {
   padding: 0.5rem 1rem;
 }
 
-.btn-take-ticket {
+.btn-take-ticket, .btn-close-ticket {
   line-height: 1;
 }
 

@@ -5,7 +5,7 @@
         <h1 class="h3 mb-0 text-gray-800">Tickets</h1>
     </div>
 
-    <div class="row">
+    <div class="row ticket-status">
 
         <!-- All active -->
         <div class="col-xl-3 col-md-6 col-sm-6 mb-4">
@@ -13,7 +13,7 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"><a href="">All Active</a></div>
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"><a href="" class="active">All Active</a></div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">10</div>
                         </div>
                         <div class="col-auto">
@@ -30,7 +30,7 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1"><a href="">Assigned</a></div>
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1"><a href="" class="assigned">Assigned</a></div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">2</div>
                         </div>
                         <div class="col-auto">
@@ -47,7 +47,7 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1"><a href="">Unassigned</a></div>
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1"><a href="" class="unassigned">Unassigned</a></div>
                             <div class="row no-gutters align-items-center">
                                 <div class="col-auto">
                                     <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">8</div>
@@ -70,7 +70,7 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1"><a href="">Closed</a></div>
+                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1"><a href="" class="closed">Closed</a></div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">10</div>
                         </div>
                         <div class="col-auto">
@@ -84,7 +84,7 @@
         <!-- Collapsable Cards -->
         <div class="tickets-display">
         {{#if this.tickets}}
-            {{> ticketCards}}
+            {{> tickets}}
         {{else}}
             <h1>No Tickets Yet...</h1>
         {{/if}}

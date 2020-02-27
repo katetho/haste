@@ -1,11 +1,13 @@
-import collapsables from './collapsableCards';
 import dropdowns from './dropdowns';
-import ticketModal from './ticketModal';
 import utilities from './utilitiesHome';
+import ticketStatus from './ticketStatus';
+import collapsables from './collapsableCards';
 import ticketTakeReq from './ticketTakeReq';
+import modals from './Modals';
 
-collapsables();
 dropdowns();
-ticketModal();
 utilities();
+ticketStatus();
+modals();
+collapsables();
 ticketTakeReq();

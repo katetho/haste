@@ -41,10 +41,29 @@ module.exports = {
             item.encodedID = Base64.encode(item.id);
         })
     },
-    ticketHandler: function(items) {
+    statusCheck: function(items,req) {
+        items.forEach((item) => {
+            if(item.assigneeID === req.session.user._id){
+              item.assignedToCurrent = true;
+            }
+            else {
+              item.assignedToCurrent = false;
+            }
+            if(item.status === 'closed'){
+              item.closed=true;
+            }
+            else {
+              item.closed=false;
+            }
+        })
+    },
+    ticketHandler: function(items,req) {
+      if(items.length>0) {
       this.distribute(items);
       this.ticketTime(items);
       this.encodeIDs(items);
+      this.statusCheck(items,req);
+      }
     },
     redirectSignin: function(req, res, next) { //redirect unauthenticated users
         if (req.session && !req.session.user) {

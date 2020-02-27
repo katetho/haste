@@ -45,7 +45,8 @@ app.use('/users', usersRoute);
 //Connect to DB
 mongoose.connect(process.env.DB_CONNECTION, {
         useUnifiedTopology: true,
-        useNewUrlParser: true
+        useNewUrlParser: true,
+        useFindAndModify: false //throws warning if not set
     },
     () => {
         console.log('connected to DB');

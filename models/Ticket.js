@@ -28,6 +28,18 @@ const TicketSchema = mongoose.Schema({
 	assignee: {
 		type: String,
 		required: false
+	},
+	assigneeID: {
+	type: String,
+	required: false
+		},
+	status: {
+		type: String,
+		default: 'unassigned'
+	},
+	initiator: {
+		type: String,
+		required:true
 	}
 });
 

@@ -23,9 +23,19 @@
                 </div>
               <div class="d-flex justify-content-center">
                 {{#if assignee}}
+                {{#if assignedToCurrent}}
+                {{#if closed}}
+                <span class="text">Closed</span>
+                  {{else}}
+                  <div id={{encodedID}} class="btn btn-success text-center btn-close-ticket">
+                    <span class="text">Close</span>
+                    </div>
+                    {{/if}}
+                {{else}}
                 <a id={{encodedID}} href='#'>
                     Assigned to: {{assignee}}
                 </a>
+                {{/if}}
                 {{else}}
                 <div id={{encodedID}} class="btn btn-success text-center btn-take-ticket">
                     <span class="text">Take</span>
