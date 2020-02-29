@@ -12,7 +12,6 @@ export default function showModals() {
     for (var i = 0; i < closeTicketBtn.length; i++) {
         closeTicketBtn[i].addEventListener('click', showBgModal);
     }
-
 }
 
 function showBgModal(e) {
@@ -20,7 +19,7 @@ function showBgModal(e) {
     if (e.currentTarget.classList.contains('new-ticket')) {
         bgModal = document.querySelector('.bg-modal');
         let form = bgModal.querySelector('.ticket-form');
-        let deadline = bgModal.querySelector('#deadline');
+        let deadline = form.deadline;
         deadline.onfocus = function() { //let the user choose a date onfocus
             this.type = "date";
         }
@@ -35,15 +34,12 @@ function showBgModal(e) {
         function submitTicket() {
             let inputs = form.querySelectorAll('input, select, textarea'); //get all inputs
             let inputCount = 0;
-            for (let input of inputs) { //don't iterate through "form" - too many elements
-                let longTitle = (input.id === 'title' && input.value.length > 35);
-                if (input.value === "" || longTitle) {
-                    if (longTitle || input.value === "") {
-                        input.style.borderColor = 'red'; //outline empty fields or long title
-                        if (longTitle) {
-                            let tooltipTxt = input.parentNode.getAttribute('data');
-                            input.parentNode.setAttribute('data-tooltip', tooltipTxt);
-                        }
+            for (let input of inputs) {
+                if (input.validationMessage !== '') {
+                    input.style.borderColor = 'red'; //outline empty fields or long title
+                    if (input.name === 'title') {
+                        let tooltipTxt = input.parentNode.getAttribute('data');
+                        input.parentNode.setAttribute('data-tooltip', tooltipTxt);
                     }
                 } else {
                     inputCount++;
@@ -53,16 +49,14 @@ function showBgModal(e) {
                         let ticketsArr = []
                         for (let input of inputs) {
                             let val = input.value;
-                            if (input.id === 'description' || input.id === 'title') {
+                            if (input.name === 'description' || input.name === 'title') {
                                 val = val.slice(0, 1)
                                     .toUpperCase() + val.slice(1, val.length);
                             }
                             ticketsArr.push(val);
                         }
                         postTicket(new Ticket(...ticketsArr)); //ES6, for ES5 - loop through
-                        for (let input of inputs) {
-                            input.value = ""; //clear out the form
-                        }
+                        form.reset();
                         bgModal.style.display = "none";
                         page.className = '';
                     }
@@ -87,7 +81,6 @@ function showBgModal(e) {
             page.className = '';
         }
     }
-
     bgModal.style.display = "flex";
     page.className = 'blur'
     centerModal(bgModal);
@@ -102,13 +95,10 @@ function showBgModal(e) {
         page.className = '';
     }
 
-
     function centerModal() {
         let contents = bgModal.querySelector('.modal-contents');
-        let width = contents.getBoundingClientRect()
-            .width;
-        let height = contents.getBoundingClientRect()
-            .height;
+        let width = contents.getBoundingClientRect().width;
+        let height = contents.getBoundingClientRect().height;
         scrollTo({
             top: contents.offsetTop - height / 5,
             left: contents.offsetLeft - width / 5,

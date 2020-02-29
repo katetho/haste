@@ -31,7 +31,7 @@ router.post('/', async (req, res) => {
             initiator
         });
         const savedTicket = await ticket.save();
-        let tickets = tickets = await Ticket.find();
+        let tickets = await Ticket.find();
         helpers.ticketHandler(tickets, req);
         res.render('home', {
             title: 'Tickets',

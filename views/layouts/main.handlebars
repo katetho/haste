@@ -296,10 +296,10 @@
             <fieldset class="ticket-fieldset">
                 <div class="row">
                     <div class="col tooltip" data="No more than 35 characters">
-                        <input placeholder="Title" class="text-field title" type="text" id="title">
+                        <input placeholder="Title" required pattern="[A-Za-z0-9]{1,35}" class="text-field title" type="text" name="title">
                     </div>
                     <div class="col">
-                        <select id="department">
+                        <select name="department" required>
                             <option value="" disabled selected>Select Department</option>
                             <option value="Sales">Sales</option>
                             <option value="IT department">IT department</option>
@@ -312,7 +312,7 @@
                 </div>
                 <div class="row">
                     <div class="col">
-                        <select id="priority">
+                        <select required name="priority">
                             <option value="" disabled selected>Select Priority</option>
                             <option value="Urgent">Urgent</option>
                             <option value="Normal">Normal</option>
@@ -320,12 +320,12 @@
                         </select>
                     </div>
                     <div class="col">
-                        <input placeholder="Deadline" class="text-field title" id="deadline">
+                        <input min="2020-01-01" required placeholder="Deadline" class="text-field title" name="deadline">
                     </div>
                 </div>
             </fieldset>
             <fieldset class="ticket-fieldset">
-                <textarea placeholder="Description..." class="text-field description" id="description"></textarea>
+                <textarea required class="text-field description" name="description"></textarea>
             </fieldset>
             <div class="btn btn-success btn-icon-split submit-ticket">
                 <span class="icon text-white-50">
