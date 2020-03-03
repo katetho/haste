@@ -41,6 +41,11 @@ app.use(session({
 app.use('/tickets', ticketsRoute);
 app.use('/', homeRoute);
 app.use('/users', usersRoute);
+app.use((req,res)=>{ //page not found
+  res.render('404', {
+      layout: 'users'
+  });
+})
 
 //Connect to DB
 mongoose.connect(process.env.DB_CONNECTION, {
