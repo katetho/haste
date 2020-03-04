@@ -5,7 +5,7 @@ export default function postTicket(obj) {
       xhr.open('POST', '/tickets', true);
       xhr.setRequestHeader("Content-Type", "application/json");
       obj.location=location.pathname.slice(1);
-      xhr.withCredentials=true;
+    //  xhr.withCredentials=true;
       xhr.responseType = 'document';
       xhr.onload = function() {
           if (this.status == 200) {
