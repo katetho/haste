@@ -1,4 +1,4 @@
-import ticket from './ticket';
+import ticket from './ticket.js';
 
 export default function cardTicketsContent(tickets) {
   if (!tickets) {

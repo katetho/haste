@@ -1,4 +1,4 @@
-import modals from './Modals';
+import modals from './Modals.js';
 
 let takeBtns = document.getElementsByClassName('btn-take-ticket');
 

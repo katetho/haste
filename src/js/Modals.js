@@ -1,7 +1,6 @@
-import ticketClass from './ticketClass';
-import postTicket from './ticketsReq';
-import postTicketClose from './ticketCloseReq'
-let Ticket = ticketClass();
+import Ticket from './ticketClass.ts';
+import postTicket from './ticketsReq.js';
+import postTicketClose from './ticketCloseReq.js'
 
 let newTicketBtn = document.getElementsByClassName('new-ticket')[0];
 let closeTicketBtn = document.getElementsByClassName('btn-close-ticket');

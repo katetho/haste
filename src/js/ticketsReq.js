@@ -1,4 +1,4 @@
-import cardTicketsContent from './cardTicketsContent';
+import cardTicketsContent from './cardTicketsContent.js';
 
 export default function postTicket(obj) {
       let xhr = new XMLHttpRequest();
