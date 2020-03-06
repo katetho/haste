@@ -1,14 +1,14 @@
-let dropDowns = document.getElementsByClassName("nav-link");
-let navbarSide = document.getElementsByClassName("navbar-nav")[0];
-let pageTopBtn = document.getElementById("sidebarToggleTop");
-let pageTop = document.getElementById("page-top");
+let dropDowns: NodeListOf<HTMLElement> = document.querySelectorAll('.nav-link');
+let navbarSide: HTMLElement = document.querySelector('.navbar-nav');
+let pageTopBtn: HTMLElement = document.querySelector('#sidebarToggleTop');
+let pageTop: HTMLElement = document.querySelector('#page-top');
 
 for (let i = 0; i < dropDowns.length; i++) {
     dropDowns[i].addEventListener('click', showToggle)
 }
 
-function showToggle(e) {
-    let el = e.currentTarget;
+function showToggle(e):void {
+    let el: HTMLElement = (<HTMLElement>e.currentTarget);
     el.classList.toggle("show");
     if (el.nextElementSibling) {
         el.nextElementSibling.classList.toggle("show");

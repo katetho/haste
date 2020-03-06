@@ -1,6 +1,6 @@
 export default function utilities() {
-    let accountName = document.getElementsByClassName("fullname")[0];
-    let signOut = document.getElementsByClassName("signout")[0];
+    let accountName: HTMLElement = document.querySelector('.fullname');
+    let signOut: HTMLElement =  document.querySelector('.signout');
     accountName.innerHTML = atob(localStorage.un) || ''; //decode from base64
     signOut.onclick = function() {
         localStorage.clear();

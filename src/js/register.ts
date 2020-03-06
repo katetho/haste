@@ -1,6 +1,5 @@
-import postUser from './registerReq.js';
-import userClass from './userClass.js';
-let User = userClass();
+import postUser from './registerReq.ts';
+import User from './userClass.ts';
 
 (function register() {
   let form: HTMLElement = document.querySelector('.user-register');

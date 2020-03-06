@@ -1,9 +1,9 @@
-import dropdowns from './dropdowns.js';
-import utilities from './utilitiesHome.js';
-import ticketStatus from './ticketStatus.js';
-import collapsables from './collapsableCards.js';
-import ticketTakeReq from './ticketTakeReq.js';
-import modals from './Modals.js';
+import dropdowns from './dropdowns.ts';
+import utilities from './utilitiesHome.ts';
+import ticketStatus from './ticketStatus.ts';
+import collapsables from './collapsableCards.ts';
+import ticketTakeReq from './ticketTakeReq.ts';
+import modals from './Modals.ts';
 
 dropdowns();
 utilities();

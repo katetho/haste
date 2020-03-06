@@ -1,8 +1,8 @@
-let header = document.getElementsByClassName("d-block");
-let cardBody = document.getElementsByClassName("collapse show");
-let takeBtn = document.getElementsByClassName('btn-take-ticket');
+let header: HTMLCollectionOf<Element> = document.getElementsByClassName("d-block");
+let cardBody: NodeListOf<HTMLElement> = document.querySelectorAll('.collapse, .show');
+let takeBtn: NodeListOf<HTMLElement> = document.querySelectorAll('.btn-take-ticket');
 
-function showHide(el) {
+function showHide(el: HTMLElement): void {
     if (el.style.height !== '0px') {
         el.style.height = '0px';
     } else {
@@ -11,7 +11,7 @@ function showHide(el) {
     }
 }
 
-function fixHeight(el) {
+function fixHeight(el: HTMLElement): void {
     if (el.style.height !== '0px') {
         el.style.height = el.scrollHeight + 'px';
     }
@@ -19,11 +19,12 @@ function fixHeight(el) {
 
 export default function collapsables() {
     for (let i = 0; i < header.length; i++) {
-        header[i].addEventListener("click", function(e) {
+            header[i].addEventListener("click", function(e: MouseEvent) {
             e.preventDefault();
-            this.classList.toggle("active");
-            let panel = this.nextElementSibling;
+            (<HTMLLinkElement>e.currentTarget).classList.toggle("active");
+            let panel: any = (<HTMLLinkElement>e.currentTarget).nextElementSibling; //TYPE??
             fixHeight(panel);
+            console.log(panel)
             setTimeout(showHide, 0, panel); //showHide must execute after fixHeight
         }); //otherwise height won't have a pixel value, and the transition wouldnt occur
     }
