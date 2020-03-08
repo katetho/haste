@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const path = require('path');
-const Base64 = require('js-base64').Base64;
+const Base64 = require('js-base64')
+    .Base64;
 const User = require('../models/User');
 const helpers = require('../middleware/helperFunctions');
 const validate = require('../middleware/validators');
@@ -23,9 +24,16 @@ router.get('/register', helpers.redirectHome, async (req, res) => {
 router.post('/register', helpers.redirectHome, async (req, res) => {
     try {
         let invalid = [];
-        let exists = await User.find({
-            email: req.body.email
-        });
+        await User.findOne({
+            where: {
+                email: req.body.email
+            }
+        }).then(res=>{ console.log("!!!"+res+"!!!")
+          if(res !== null) {
+          invalid.push('email')
+        }
+      });
+
         if (req.body.repPassword !== req.body.password) {
             invalid.push('repeatPassword');
         }
@@ -38,7 +46,7 @@ router.post('/register', helpers.redirectHome, async (req, res) => {
         if (!validate.password(req.body.password)) {
             invalid.push('password');
         }
-        if (!validate.email(req.body.email) || exists.length) {
+        if (!validate.email(req.body.email)) {
             invalid.push('email');
         }
         if (!validate.department(req.body.department)) {
@@ -47,20 +55,23 @@ router.post('/register', helpers.redirectHome, async (req, res) => {
         // if([]) - true; if([]==false) - true as well
         //[] is interpreted as 0 by '==', and 'if' converts any existing object to true
         if (invalid.length) {
+          console.log('invalid includes length'+invalid)
             return res.status(422)
                 .json(invalid);
         }
         bcrypt.hash(req.body.password, saltRounds)
-            .then((hash) => {
-                const user = new User({
+            .then(async (hash) => {
+                console.log('queried')
+                const user = await User.create({
                     firstName: req.body.firstName,
                     lastName: req.body.lastName,
                     email: req.body.email,
                     department: req.body.department,
                     password: hash,
                     role: req.body.role
+                }).catch(err=>{
+                  console.log('Query error: '+err)
                 });
-                const savedUser = user.save()
             })
         res.json(user);
     } catch (err) {
@@ -101,16 +112,16 @@ router.post('/signin', helpers.redirectHome, async (req, res) => {
                             let username = Base64.encode(user.firstName + ' ' + user.lastName);
                             res.json(username); //when they're tring to access certain pages
                         } else {
-                          res.status(401)
-                            .json('password');
+                            res.status(401)
+                                .json('password');
                         }
                     })
                     .catch((err) => {
                         console.log(err)
                     });
             } else {
-              res.status(401)
-                .json('email');
+                res.status(401)
+                    .json('email');
             }
         } else {
             let missing = [];

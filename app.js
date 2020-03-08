@@ -1,6 +1,5 @@
 const express = require('express');
 const app = express();
-const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 require('dotenv/config');
 const ticketsRoute = require('./routes/tickets');
@@ -10,7 +9,6 @@ const cors = require('cors');
 const path = require('path');
 const exphbrs = require('express-handlebars');
 const session = require('express-session');
-const MongoStore = require('connect-mongo')(session);
 
 app.use(express.static(path.join(__dirname, '/public')));
 app.set('view engine', 'handlebars');
@@ -26,9 +24,7 @@ app.use(session({
     saveUninitialized: true, //false for implementing login sessions
     resave: true, //true saves the ssesion back to DB even if unmodified
     secret: process.env.SESSION_SECRET,
-    store: new MongoStore({
-        mongooseConnection: mongoose.connection //use an existing mongoose con
-    }),
+    store: '',
     cookie: {
         path: "/",
         maxAge: 1000 * 60 * 100, //10 minutes
@@ -47,15 +43,15 @@ app.use((req,res)=>{ //page not found
   });
 })
 
-//Connect to DB
-mongoose.connect(process.env.DB_CONNECTION, {
-        useUnifiedTopology: true,
-        useNewUrlParser: true,
-        useFindAndModify: false //throws warning if not set
-    },
-    () => {
-        console.log('connected to DB');
-    });
+//test DB
 
+const db = require('./config/database')
+db.authenticate()
+.then(()=>{
+  console.log('DB connected')
+})
+.catch((err)=>{
+  console.log('Error: ' + err)
+})
 
 app.listen(3002);

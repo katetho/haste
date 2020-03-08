@@ -1,46 +1,40 @@
-const mongoose = require('mongoose');
+const Sequelize = require('sequelize');
+const db = require('../config/database');
 
-const TicketSchema = mongoose.Schema({
-	title: {
-	type: String,
-	required: true
-},
-	department: {
-		type: String,
-		required: true
+const Ticket = db.define('ticket', {
+	title:{
+		type: Sequelize.STRING
 	},
-	priority: {
-		type: String,
-		required: true
+	department:{
+		type: Sequelize.STRING
 	},
-	deadline: {
-		type: Date,
-		required: true
+	priority:{
+		type: Sequelize.STRING
 	},
-	description: {
-		type: String,
-		required: true
+	deadline:{
+		type: Sequelize.DATE
 	},
-	date: {
-		type: Date,
-		default: Date.now
+	description:{
+		type: Sequelize.STRING
 	},
-	assignee: {
-		type: String,
-		required: false
+	date:{
+		type: Sequelize.DATE
 	},
-	assigneeID: {
-	type: String,
-	required: false
-		},
-	status: {
-		type: String,
-		default: 'unassigned'
+	assignee:{
+		type: Sequelize.STRING
 	},
-	initiator: {
-		type: String,
-		required:true
-	}
-});
+	assigneeID:{
+		type: Sequelize.STRING
+	},
+	status:{
+		type: Sequelize.STRING,
+		defaultValue: 'unassigned'
+	},
+	initiator:{
+		type: Sequelize.STRING
+	},
+}, {
+    timestamps: false
+  })
 
-module.exports = mongoose.model('Tickets', TicketSchema);
+module.exports = Ticket;
