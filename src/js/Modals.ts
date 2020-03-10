@@ -94,8 +94,11 @@ function showBgModal(e) {
         page.className = '';
     }
 
-    function centerModal(bgModal) {
-        let contents: HTMLElement = bgModal.querySelector('.modal-contents');
+    function centerModal(bgMod):void {
+        if(!bgMod) {
+          return;
+        }
+        let contents: HTMLElement = bgMod.querySelector('.modal-contents');
         let width: number = contents.getBoundingClientRect().width;
         let height: number = contents.getBoundingClientRect().height;
         scrollTo({

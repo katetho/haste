@@ -43,7 +43,7 @@ module.exports = {
     },
     statusCheck: function(items,req) {
         items.forEach((item) => {
-            if(item.assigneeID === req.session.userId._id){
+            if(item.assigneeID == req.session.userId){
               item.assignedToCurrent = true;
             }
             else {
