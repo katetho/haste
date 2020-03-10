@@ -2,6 +2,11 @@ const Sequelize = require('sequelize');
 const db = require('../config/database');
 
 const User = db.define('user', {
+	id:{
+		type: Sequelize.INTEGER,
+		primaryKey: true,
+		autoIncrement: true
+	},
 	firstName:{
 		type: Sequelize.STRING
 	},
@@ -24,5 +29,7 @@ const User = db.define('user', {
 }, {
     timestamps: false
   })
+
+User.sync(); //create if not created
 
 module.exports = User;

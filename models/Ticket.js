@@ -2,6 +2,11 @@ const Sequelize = require('sequelize');
 const db = require('../config/database');
 
 const Ticket = db.define('ticket', {
+	id:{
+		type: Sequelize.INTEGER,
+		primaryKey: true,
+		autoIncrement: true
+	},
 	title:{
 		type: Sequelize.STRING
 	},
@@ -36,5 +41,7 @@ const Ticket = db.define('ticket', {
 }, {
     timestamps: false
   })
+
+Ticket.sync(); //create if not created
 
 module.exports = Ticket;

@@ -43,7 +43,7 @@ module.exports = {
     },
     statusCheck: function(items,req) {
         items.forEach((item) => {
-            if(item.assigneeID === req.session.user._id){
+            if(item.assigneeID === req.session.userId._id){
               item.assignedToCurrent = true;
             }
             else {
@@ -65,15 +65,15 @@ module.exports = {
       this.statusCheck(items,req);
       }
     },
-    redirectSignin: function(req, res, next) { //redirect unauthenticated users
-        if (req.session && !req.session.user) {
+    redirectSignin: async function(req, res, next) { //redirect unauthenticated users
+        if (req.session && !req.session.userId) {
             res.redirect('/users/signin')
         } else {
             next();
         }
     },
     redirectHome: function(req, res, next) { //redirect authenticated users
-        if (req.session && req.session.user) {
+        if (req.session && req.session.userId) {
             res.redirect('/')
         } else {
             next();

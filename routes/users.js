@@ -4,6 +4,7 @@ const path = require('path');
 const Base64 = require('js-base64')
     .Base64;
 const User = require('../models/User');
+const Session = require('../models/Session');
 const helpers = require('../middleware/helperFunctions');
 const validate = require('../middleware/validators');
 const bcrypt = require('bcrypt');
@@ -28,7 +29,7 @@ router.post('/register', helpers.redirectHome, async (req, res) => {
             where: {
                 email: req.body.email
             }
-        }).then(res=>{ console.log("!!!"+res+"!!!")
+        }).then(res=>{
           if(res !== null) {
           invalid.push('email')
         }
@@ -55,13 +56,11 @@ router.post('/register', helpers.redirectHome, async (req, res) => {
         // if([]) - true; if([]==false) - true as well
         //[] is interpreted as 0 by '==', and 'if' converts any existing object to true
         if (invalid.length) {
-          console.log('invalid includes length'+invalid)
             return res.status(422)
                 .json(invalid);
         }
         bcrypt.hash(req.body.password, saltRounds)
             .then(async (hash) => {
-                console.log('queried')
                 const user = await User.create({
                     firstName: req.body.firstName,
                     lastName: req.body.lastName,
@@ -101,14 +100,16 @@ router.post('/signin', helpers.redirectHome, async (req, res) => {
         if (email && password) {
             let validPassword = false;
             const user = await User.findOne({
-                email: req.body.email
+                where: {
+                    email: req.body.email
+                }
             })
             if (user) {
                 bcrypt.compare(req.body.password, user.password)
-                    .then((result) => {
+                    .then( async (result) => {
                         validPassword = result;
                         if (validPassword) { //if the user's present in the DB
-                            req.session.user = user; //create this field & check for the presence of it
+                        req.session.userId = user.id; //create this field & check for the presence of it
                             let username = Base64.encode(user.firstName + ' ' + user.lastName);
                             res.json(username); //when they're tring to access certain pages
                         } else {

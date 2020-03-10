@@ -1,6 +1,6 @@
 //Connect to DB
 const Sequelize = require('sequelize');
-module.exports = new Sequelize('haste', 'root', '2020', {
+ const db = new Sequelize('haste', 'root', '2020', {
   host: 'localhost',
   dialect: 'mysql',
   operatorsAliases: 0, //false
@@ -12,3 +12,6 @@ module.exports = new Sequelize('haste', 'root', '2020', {
     idle: 10000
   },
 })
+
+
+module.exports = db
