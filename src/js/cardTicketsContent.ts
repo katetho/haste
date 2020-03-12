@@ -1,8 +1,8 @@
 import collapsables from './collapsableCards.ts';
-import ticketTakeReq from './ticketTakeReq.ts';
+import ticketTake from './ticketTake.ts';
 import modals from './Modals.ts';
 
-export default function cardTicketsContent(tickets: HTMLElement) {
+export default function cardTicketsContent(tickets: HTMLElement): void {
   if (!tickets) {
       return;
   }
@@ -13,6 +13,6 @@ export default function cardTicketsContent(tickets: HTMLElement) {
       .innerHTML; //this chunk of dom is generated after the scripts are added
 
       collapsables();
-      ticketTakeReq();
+      ticketTake();
       modals();
 }

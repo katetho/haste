@@ -1,6 +1,6 @@
 import Ticket from './ticketClass.ts';
-import postTicket from './ticketsReq.ts';
-import postTicketClose from './ticketCloseReq.ts';
+import cardTicketsContent from './cardTicketsContent.ts';
+import fetchData from './fetchData.ts';
 
 let newTicketBtn: HTMLElement = document.querySelector('.new-ticket');
 let closeTicketBtn: HTMLCollectionOf<Element> = document.getElementsByClassName('btn-close-ticket');
@@ -54,7 +54,7 @@ function showBgModal(e) {
                             }
                             ticketsArr.push(val);
                         }
-                        postTicket(new Ticket(...ticketsArr)); //ES6, for ES5 - loop through
+                        fetchData(new Ticket(...ticketsArr), 'POST', '/tickets', postTicketClose);
                         form.reset();
                         bgModal.style.display = "none";
                         page.className = '';
@@ -70,12 +70,8 @@ function showBgModal(e) {
         submit.addEventListener('click', closeTicket);
 
         function closeTicket() {
-            let action: string = bgModal.querySelector('input[name=close]:checked')
-                .id;
-            postTicketClose({
-                action,
-                ticketId
-            });
+            let action: string = bgModal.querySelector('input[name=close]:checked').id;
+            fetchData({action,ticketId}, 'PATCH', '/tickets/close', postTicketClose);
             bgModal.style.display = "none";
             page.className = '';
         }
@@ -84,7 +80,7 @@ function showBgModal(e) {
     page.className = 'blur'
     centerModal(bgModal);
 
-    window.onresize = function(bgModal) {
+    window.onresize = function() {
         centerModal(bgModal);
     }
 
@@ -94,10 +90,8 @@ function showBgModal(e) {
         page.className = '';
     }
 
-    function centerModal(bgMod):void {
-        if(!bgMod) {
-          return;
-        }
+    function centerModal(bgMod): any {
+        if(bgMod) {
         let contents: HTMLElement = bgMod.querySelector('.modal-contents');
         let width: number = contents.getBoundingClientRect().width;
         let height: number = contents.getBoundingClientRect().height;
@@ -106,5 +100,15 @@ function showBgModal(e) {
             left: contents.offsetLeft - width / 5,
             behavior: 'smooth'
         });
+      }
     }
+}
+
+function postTicketClose(res:any): void {
+  if (res.status === 200) {
+    Promise.resolve(res.text()).then((data)=>{
+      let parser: DOMParser = new DOMParser();
+      let parsed: any = parser.parseFromString(data, 'text/html'); //TYPE???
+      cardTicketsContent(parsed)})
+  }
 }

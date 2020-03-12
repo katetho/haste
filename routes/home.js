@@ -7,7 +7,7 @@ const path = require('path');
 const helpers = require('../middleware/helperFunctions');
 const { Op } = require("sequelize");
 
-
+//MAKE A UNIVERSAL REQ USING req.path and switch cases
 router.get('/', helpers.redirectSignin, async (req, res) => {
     try {
         let status = [];
@@ -44,7 +44,7 @@ router.get('/mytickets', helpers.redirectSignin, async (req, res) => {
         } else {
             status = req.query.status;
         }
-        let tickets = await User.findAll({
+        let tickets = await Ticket.findAll({
             where: {
                 assigneeID: req.session.userId,
                 status
