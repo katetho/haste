@@ -10,7 +10,7 @@ const validate = require('../middleware/validators');
 const bcrypt = require('bcrypt');
 const saltRounds = 10; //for password hashing
 
-router.get('/register', helpers.redirectHome, async (req, res) => {
+router.get('/register', async (req, res) => {
     try {
         res.render('register', {
             layout: 'users'
@@ -22,7 +22,7 @@ router.get('/register', helpers.redirectHome, async (req, res) => {
     }
 })
 
-router.post('/register', helpers.redirectHome, async (req, res) => {
+router.post('/register', async (req, res) => {
     try {
         let invalid = [];
         await User.findOne({
@@ -80,7 +80,7 @@ router.post('/register', helpers.redirectHome, async (req, res) => {
     }
 })
 
-router.get('/signin', helpers.redirectHome, async (req, res) => {
+router.get('/signin', async (req, res) => {
     try {
         res.render('signin', {
             layout: 'users'
@@ -93,7 +93,7 @@ router.get('/signin', helpers.redirectHome, async (req, res) => {
 })
 
 
-router.post('/signin', helpers.redirectHome, async (req, res) => {
+router.post('/signin', async (req, res) => {
     try {
         let email = req.body.email;
         let password = req.body.password;
@@ -142,7 +142,7 @@ router.post('/signin', helpers.redirectHome, async (req, res) => {
     }
 })
 
-router.get('/forgot-password', helpers.redirectHome, async (req, res) => {
+router.get('/forgot-password', async (req, res) => {
     try {
         res.render('forgotpass', {
             layout: 'users'

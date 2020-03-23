@@ -2,15 +2,13 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 require('dotenv/config');
-const ticketsRoute = require('./routes/tickets');
-const homeRoute = require('./routes/home');
-const usersRoute = require('./routes/users');
 const cors = require('cors');
 const path = require('path');
 const exphbrs = require('express-handlebars');
 const session = require('express-session');
 const Sequelize = require('sequelize');
 const Session = require('./models/Session');
+const router = require('./routes/routes');
 
 app.use(express.static(path.join(__dirname, '/public')));
 app.set('view engine', 'handlebars');
@@ -63,13 +61,6 @@ app.use(session({
 seshStore.sync();
 
 //Middleware
-app.use('/tickets', ticketsRoute);
-app.use('/', homeRoute);
-app.use('/users', usersRoute);
-app.use((req, res) => { //page not found
-    res.render('404', {
-        layout: 'users'
-    });
-})
+app.use('/', router)
 
 app.listen(3002);

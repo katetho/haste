@@ -8,6 +8,8 @@ services:
       MYSQL_DATABASE: hasteDB
       MYSQL_USER: root
       MYSQL_PASSWORD: 2020
+    volumes:
+      - my-db:/var/lib/mysql
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: phpmyadmin
@@ -28,3 +30,6 @@ services:
     ports:
       - '80:3002'
     command: npm run dev
+    # names
+volumes:
+  my-db:

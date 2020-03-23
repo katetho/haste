@@ -8,7 +8,7 @@ const helpers = require('../middleware/helperFunctions');
 const { Op } = require("sequelize");
 
 //MAKE A UNIVERSAL REQ USING req.path and switch cases
-router.get('/', helpers.redirectSignin, async (req, res) => {
+router.get('/', async (req, res) => {
     try {
         let status = [];
         if (req.query.status === undefined || req.query.status === 'active') {
@@ -36,7 +36,7 @@ router.get('/', helpers.redirectSignin, async (req, res) => {
     }
 })
 
-router.get('/mytickets', helpers.redirectSignin, async (req, res) => {
+router.get('/mytickets', async (req, res) => {
     try {
         let status;
         if (req.query.status === undefined || req.query.status === 'active') {
@@ -63,7 +63,7 @@ router.get('/mytickets', helpers.redirectSignin, async (req, res) => {
     }
 })
 
-router.get('/taketicket', helpers.redirectSignin, async (req, res) => {
+router.get('/taketicket', async (req, res) => {
     try {
         let status;
         if (req.query.status === undefined || req.query.status === 'active') {
@@ -98,7 +98,7 @@ router.get('/taketicket', helpers.redirectSignin, async (req, res) => {
     }
 })
 
-router.get('/outgoing', helpers.redirectSignin, async (req, res) => {
+router.get('/outgoing', async (req, res) => {
     try {
         let status;
         if (req.query.status === undefined || req.query.status === 'active') {
