@@ -1,7 +1,7 @@
 //Connect to DB
 const Sequelize = require('sequelize');
- const db = new Sequelize('haste', 'root', '2020', {
-  host: 'localhost',
+ const db = new Sequelize('hasteDB', 'root', '2020', {
+  host: 'db',
   dialect: 'mysql',
   operatorsAliases: 0, //false
 
