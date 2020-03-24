@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const ticketsRoutes = require('./ticketsController');
 const homeRoutes = require('./homeController');
+const ticketsRoutes = require('./ticketsController');
 const usersRoutes = require('./usersController');
 const helpers = require('../middleware/helperFunctions');
 
