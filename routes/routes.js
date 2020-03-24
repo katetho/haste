@@ -5,8 +5,12 @@ const homeRoutes = require('./homeController');
 const usersRoutes = require('./usersController');
 const helpers = require('../middleware/helperFunctions');
 
+router.get('/', helpers.redirectSignin, homeRoutes.list);
+router.get('/mytickets', helpers.redirectSignin, homeRoutes.mytickets);
+router.get('/taketicket', helpers.redirectSignin, homeRoutes.taketicket);
+router.get('/outgoing', helpers.redirectSignin, homeRoutes.outgoing);
+
 router.use('/tickets', helpers.redirectSignin, ticketsRoutes);
-router.use('/', helpers.redirectSignin, homeRoutes);
 router.use('/users', helpers.redirectHome, usersRoutes);
 router.use((req, res) => { //page not found
     res.render('404', {
