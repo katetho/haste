@@ -7,7 +7,6 @@ const path = require('path');
 const helpers = require('../middleware/helperFunctions');
 const { Op } = require("sequelize");
 
-//MAKE A UNIVERSAL REQ USING req.path and switch cases
 export const list = async (req, res) => {
     try {
         let status = [];

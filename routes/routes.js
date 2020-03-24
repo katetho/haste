@@ -10,6 +10,13 @@ router.get('/mytickets', helpers.redirectSignin, homeRoutes.mytickets);
 router.get('/taketicket', helpers.redirectSignin, homeRoutes.taketicket);
 router.get('/outgoing', helpers.redirectSignin, homeRoutes.outgoing);
 
+router.get('/tickets', helpers.redirectSignin, ticketsRoutes.getAllTickets);
+router.post('/tickets', helpers.redirectSignin, ticketsRoutes.postTicket);
+router.get('/tickets/:ticketId', helpers.redirectSignin, ticketsRoutes.findTicket);
+router.delete('/tickets/:ticketId', helpers.redirectSignin, ticketsRoutes.deleteTicket);
+router.patch('/tickets/close', helpers.redirectSignin, ticketsRoutes.closeTicket);
+router.patch('/tickets/:ticketId', helpers.redirectSignin, ticketsRoutes.takeTicket);
+
 router.use('/tickets', helpers.redirectSignin, ticketsRoutes);
 router.use('/users', helpers.redirectHome, usersRoutes);
 router.use((req, res) => { //page not found

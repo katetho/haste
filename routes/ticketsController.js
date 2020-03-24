@@ -7,7 +7,7 @@ const path = require('path');
 const helpers = require('../middleware/helperFunctions');
 const { Op } = require("sequelize");
 
-router.get('/', async (req, res) => {
+export const getAllTickets = async (req, res) => {
     try { //status - show all, but closed tickets
         let status = ["assigned", "unassigned", "active"];
         const tickets = await Ticket.findAll({
@@ -23,9 +23,9 @@ router.get('/', async (req, res) => {
             message: err
         });
     }
-})
+}
 
-router.post('/', async (req, res) => {
+export const postTicket = async (req, res) => {
     try {
         let status = ["assigned", "unassigned", "active"];
         let initiatorId = req.session.userId;
@@ -56,9 +56,9 @@ router.post('/', async (req, res) => {
         })
         console.log(err);
     }
-});
+};
 
-router.get('/:ticketId', async (req, res) => {
+export const findTicket = async (req, res) => {
     try {
         const ticket = await Ticket.findByPk(req.params.ticketId);
         res.json(ticket);
@@ -67,9 +67,9 @@ router.get('/:ticketId', async (req, res) => {
             message: err
         });
     }
-})
+}
 
-router.delete('/:ticketId', async (req, res) => {
+export const deleteTicket = async (req, res) => {
     try {
         const ticketToRemove = await Ticket.findByPk(req.params.ticketId) // here i fetch result by ID sequelize V. 5
             .then(res => {
@@ -82,9 +82,9 @@ router.delete('/:ticketId', async (req, res) => {
             message: err
         })
     }
-})
+}
 
-router.patch('/close', async (req, res) => {
+export const closeTicket = async (req, res) => {
     try {
         let ticketId = Base64.decode(req.body.ticketId);
         let replacement = {};
@@ -123,9 +123,9 @@ router.patch('/close', async (req, res) => {
             message: err
         })
     }
-})
+}
 //take ticket
-router.patch('/:ticketId', async (req, res) => {
+export const takeTicket = async (req, res) => {
     try {
         let decodedID = Base64.decode(req.params.ticketId);
         const currentUser = await User.findByPk(req.session.userId);
@@ -147,5 +147,4 @@ router.patch('/:ticketId', async (req, res) => {
             message: err
         })
     }
-})
-module.exports = router;
+}
