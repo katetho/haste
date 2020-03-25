@@ -9,7 +9,7 @@ const Session = db.define('session', {
   },
 
   expires: Sequelize.DATE,
-  data: Sequelize.STRING(50000)
+  data: Sequelize.TEXT
 });
 
 Session.belongsTo(User);

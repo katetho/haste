@@ -1,6 +1,6 @@
 //Connect to DB
 const Sequelize = require('sequelize');
- const db = new Sequelize('hasteDB', 'root', process.env.MYSQL_PASSWORD, {
+ const db = new Sequelize('haste', 'root', process.env.MYSQL_PASSWORD, {
   host: 'db',
   dialect: 'mysql',
   operatorsAliases: 0, //false

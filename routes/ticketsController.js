@@ -1,5 +1,4 @@
 const express = require('express');
-const Base64 = require('js-base64').Base64;
 const Ticket = require('../models/Ticket');
 const User = require('../models/User');
 const path = require('path');
@@ -68,10 +67,11 @@ module.exports = {
   },
   deleteTicket: async (req, res) => {
       try {
-          const ticketToRemove = await Ticket.findByPk(req.params.ticketId) // here i fetch result by ID sequelize V. 5
-              .then(res => {
-                  res.destroy(req.params.ticketId); // when i find the result i deleted it by destroy function
-              })
+          Ticket.destroy({
+            where: {
+              id: req.params.ticketId
+            }
+          })
           const tickets = await Ticket.findAll()
           res.json(tickets);
       } catch (err) {
@@ -82,7 +82,7 @@ module.exports = {
   },
   closeTicket: async (req, res) => {
       try {
-          let ticketId = Base64.decode(req.body.ticketId);
+          let ticketId = req.body.ticketId;
           let replacement = {};
           if (req.body.action === 'drop') {
               replacement = {
@@ -123,7 +123,7 @@ module.exports = {
   //take ticket
   takeTicket: async (req, res) => {
       try {
-          let decodedID = Base64.decode(req.params.ticketId);
+          let decodedID = req.params.ticketId;
           const currentUser = await User.findByPk(req.session.userId);
           let fullname = currentUser.firstName + ' ' + currentUser.lastName;
 

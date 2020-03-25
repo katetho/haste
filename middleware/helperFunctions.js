@@ -1,5 +1,3 @@
-const Base64 = require('js-base64').Base64;
-
 module.exports = {
     distribute: function(items) {
         if (items.length >= 2) {
@@ -38,7 +36,7 @@ module.exports = {
     },
     encodeIDs: function(items) {
         items.forEach((item) => {
-            item.encodedID = Base64.encode(item.id);
+            item.encodedID = item.id;
         })
     },
     statusCheck: function(items,req) {
