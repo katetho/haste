@@ -42,7 +42,7 @@ module.exports = {
           } else {
               status = req.query.status;
           }
-          let tickets = await Ticket.findAll({
+          const tickets = await Ticket.findAll({
               where: {
                   assigneeID: req.session.userId,
                   status
