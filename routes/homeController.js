@@ -75,7 +75,7 @@ module.exports = {
               include: User
           });
           let userDepartment = sesh.user.department;
-          let tickets = await Ticket.findAll({
+          const tickets = await Ticket.findAll({
               where: {
                   department: userDepartment,
                   assignee: null,
