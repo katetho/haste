@@ -2,9 +2,14 @@
   "compilerOptions": {
     "jsx": "react",
     "lib": ["es5", "es6", "dom", "dom.iterable", "es2017"],
-    "rootDir": "src",
     "module": "commonjs",
+    "outDir": "../../public/server",
+    "rootDir": ".",
+    "composite": true,
     "target": "es6",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "esModuleInterop": true,
     "sourceMap": true,
     "moduleResolution": "node",
     "noImplicitReturns": true,
@@ -12,14 +17,8 @@
     "noImplicitAny": false,
     "strictNullChecks": false
   },
-  "include": [
-    "./src"
-  ],
   "exclude": [
     "node_modules",
     "build"
-  ],
-  "references": [{
-    "path": "./src/server"
-}]
+  ]
 }

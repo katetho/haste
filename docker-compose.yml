@@ -2,38 +2,17 @@ version: '3'
 services:
   db:
     image: mysql/mysql-server:latest
+    container_name: msql
     restart: always
     environment:
       - MYSQL_ROOT_PASSWORD=password
       - MYSQL_DATABASE=haste
-      - MYSQL_USER=root
+      - MYSQL_USER=hastes
       - MYSQL_PASSWORD=2020
     volumes:
       - my-db:/var/lib/mysql
     ports:
       - "3306:3306"
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    container_name: phpmyadmin
-    environment:
-      - PMA_HOST=db
-      - MY_SQL_ROOT_PASSWORD=2020
-    restart: always
-    ports:
-        - '27017:80'
-    depends_on:
-       - db
-  app:
-    build: .
-    depends_on:
-       - db
-    container_name: haste-docker
-    restart: always
-    environment:
-      - MYSQL_PASSWORD=2020
-    ports:
-      - '80:3002'
-    command: npm run dev
     # names
 volumes:
   my-db:

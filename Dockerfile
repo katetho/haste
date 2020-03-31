@@ -5,4 +5,4 @@ RUN npm install -g nodemon
 RUN npm install
 COPY . .
 CMD ["npm", "run", "dev"]
-EXPOSE 3002
+EXPOSE 3306

@@ -3,9 +3,9 @@ let path = require('path');
 module.exports = {
 watch: true,
   entry: {
-    'home': path.resolve(__dirname + '/src/js/home.ts'),
-    'signin': path.resolve(__dirname + '/src/js/auth.ts'),
-    'register': path.resolve(__dirname + '/src/js/register.ts')
+    'home': path.resolve(__dirname + '/src/client/js/home.ts'),
+    'signin': path.resolve(__dirname + '/src/client/js/auth.ts'),
+    'register': path.resolve(__dirname + '/src/client/js/register.ts')
   },
   module:{
       rules: [
@@ -17,7 +17,7 @@ watch: true,
       ]
   },
   output: {
-    path: path.resolve(__dirname + '/public/js'),
+    path: path.resolve(__dirname + '/public/client/js'),
     filename: 'bundle-[name].js'
   },
   resolve: {

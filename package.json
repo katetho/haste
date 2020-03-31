@@ -2,14 +2,15 @@
   "name": "haste",
   "version": "1.0.0",
   "description": "ticketing system by K.E.T.",
-  "main": "app.js",
+  "main": "public/server/app.js",
   "scripts": {
     "test": "jest",
     "dev-webpack": "webpack --open --config webpack.dev.js",
     "prod-webpack": "webpack --config webpack.prod.js",
-    "server": "nodemon app.js",
+    "server": "nodemon public/server/app.js",
     "dev-gulp": "gulp watch",
-    "dev": "concurrently \"npm run dev-gulp\" \"npm run dev-webpack\" \"npm run server\"",
+    "typescript-server": "tsc -p ./src/server/tsconfig.json",
+    "dev": "concurrently \"npm run typescript-server\" \"npm run dev-gulp\" \"npm run dev-webpack\" \"npm run server\"",
     "build": "concurrently \"npm run dev-gulp\" \"npm run prod-webpack\" \"npm run server\""
   },
   "repository": {
@@ -27,6 +28,13 @@
   "homepage": "https://github.com/katetho/haste#readme",
   "dependencies": {
     "@babel/preset-typescript": "^7.8.3",
+    "@types/bcrypt": "^3.0.0",
+    "@types/body-parser": "^1.19.0",
+    "@types/cors": "^2.8.6",
+    "@types/express": "^4.17.3",
+    "@types/express-handlebars": "^3.1.0",
+    "@types/express-session": "^1.17.0",
+    "@types/sequelize": "^4.28.8",
     "babel-jest": "^25.1.0",
     "bcrypt": "^3.0.8",
     "body-parser": "^1.19.0",
@@ -45,7 +53,9 @@
     "mysql": "^2.18.1",
     "mysql2": "^2.1.0",
     "nodemon": "^2.0.2",
+    "reflect-metadata": "^0.1.13",
     "sequelize": "^5.21.5",
+    "sequelize-typescript": "^1.1.0",
     "webpack": "^4.41.6"
   },
   "devDependencies": {
