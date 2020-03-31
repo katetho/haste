@@ -40,14 +40,12 @@ function extendDefaultFields(defaults: any, session: any) {
 }
 
 let seshStore = new SequelizeStore({
-    db: db,
-    table: 'sessions',
+    db,
     checkExpirationInterval: 15 * 60 * 1000, // The interval at which to cleanup expired sessions in milliseconds.
     expiration: 10 * 1000, // The maximum age (in milliseconds) of a valid session.
-    extendDefaultFields: extendDefaultFields
+    extendDefaultFields,
 });
 
-seshStore.sync();
 
 app.use(session({
     name: process.env.SESSION_NAME,
@@ -63,7 +61,7 @@ app.use(session({
     }
 }));
 
-
+seshStore.sync();
 //Middleware
 app.use('/', router)
 
