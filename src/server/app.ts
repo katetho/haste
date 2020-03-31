@@ -7,7 +7,8 @@ import session from 'express-session';
 import bodyParser from 'body-parser';
 import { router } from './routes/routes';
 import cors from 'cors';
-import { db } from './config/database';
+//import { db } from './config/database';
+import { Sequelize } from 'sequelize';
 
 app.use(express.static(path.join(__dirname, '/../client')));
 app.set('view engine', 'handlebars');
@@ -18,7 +19,7 @@ app.engine('handlebars', exphbrs({
 }));
 app.use(bodyParser.json());
 app.use(cors());
-
+const db = new Sequelize('mysql://root:2020@192.168.99.100:3306/haste');
 //test DB
 db.authenticate()
     .then(() => {
@@ -40,11 +41,13 @@ function extendDefaultFields(defaults: any, session: any) {
 
 let seshStore = new SequelizeStore({
     db: db,
-    table: 'session',
+    table: 'sessions',
     checkExpirationInterval: 15 * 60 * 1000, // The interval at which to cleanup expired sessions in milliseconds.
     expiration: 10 * 1000, // The maximum age (in milliseconds) of a valid session.
     extendDefaultFields: extendDefaultFields
 });
+
+seshStore.sync();
 
 app.use(session({
     name: process.env.SESSION_NAME,
@@ -54,12 +57,12 @@ app.use(session({
     store: seshStore,
     cookie: {
         path: "/",
-        maxAge: 1000 * 60 * 100, //10 minutes
+        maxAge: 1000 * 60 * 10, //10 minutes
         sameSite: 'strict',
         secure: false //no https :(
     }
 }));
-seshStore.sync();
+
 
 //Middleware
 app.use('/', router)

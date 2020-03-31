@@ -1,6 +1,8 @@
-import { Model, DataTypes} from 'sequelize';
+import { Sequelize, Model, DataTypes} from 'sequelize';
 import { User } from './User';
-import { db } from '../config/database'
+//import { db } from '../config/database'
+
+const db = new Sequelize('mysql://root:2020@192.168.99.100:3306/haste');
 
 export class Session extends Model {
   public sid!: number;
@@ -33,3 +35,4 @@ Session.init({
 
 Session.belongsTo(User);
 
+//Session.sync();
