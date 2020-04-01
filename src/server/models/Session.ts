@@ -1,13 +1,13 @@
-import { Sequelize, Model, DataTypes} from 'sequelize';
+import { Model, DataTypes} from 'sequelize';
 import { User } from './User';
-//import { db } from '../config/database'
-
-const db = new Sequelize('mysql://root:2020@192.168.99.100:3306/haste');
+import { db } from '../config/database'
 
 export class Session extends Model {
   public sid!: number;
   public expires!: Date;
   public data!: Text;
+  public userId!: number;
+  
 
     // timestamps!
     public readonly createdAt!: Date;
@@ -16,9 +16,7 @@ export class Session extends Model {
 
 Session.init({
   sid: {
-    type: DataTypes.INTEGER.UNSIGNED, 
-    autoIncrement: true,
-    primaryKey: true,
+    type: DataTypes.STRING(1024)
   },
   expires: {
     type: DataTypes.DATE,
@@ -26,13 +24,18 @@ Session.init({
   },
   data: {
     type: DataTypes.STRING(1024)
-  }
+  },
+  userId: {
+    type: DataTypes.INTEGER.UNSIGNED,
+  },
 },
 {
   sequelize: db,
-  tableName: 'sessions'
+  tableName: 'Session'
 })
 
-Session.belongsTo(User);
+Session.belongsTo(User, {
+  foreignKey: 'userId'
+});
 
 //Session.sync();

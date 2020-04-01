@@ -1,15 +1,13 @@
-const express = require('express');
-const Ticket = require('../models/Ticket');
-const User = require('../models/User');
-const path = require('path');
-const helpers = require('../middleware/helperFunctions');
-const { Op } = require("sequelize");
+import { Ticket } from '../models/Ticket';
+import { User } from '../models/User';
+import { helpers } from '../services/helperFunctions';
+import { Op } from "sequelize";
 import { Request, Response} from 'express';
 
 export const getAllTickets = async (req: Request, res: Response) => {
       try { //status - show all, but closed tickets
-          let status = ["assigned", "unassigned", "active"];
-          const tickets = await Ticket.findAll({
+          let status: string[] = helpers.status();
+          const tickets: Ticket[] = await Ticket.findAll({
               where: {
                   status: {
                       [Op.or]: status
@@ -26,9 +24,9 @@ export const getAllTickets = async (req: Request, res: Response) => {
   
   export const postTicket = async (req: Request, res: Response) => {
       try {
-          let status = ["assigned", "unassigned", "active"];
-          let initiatorId = req.session.userId;
-          const ticket = await Ticket.create({
+          let status = helpers.status();
+          let initiatorId: number = req.session.userId;
+          const ticket: Ticket = await Ticket.create({
               title: req.body.title,
               department: req.body.department,
               priority: req.body.priority,
@@ -59,7 +57,7 @@ export const getAllTickets = async (req: Request, res: Response) => {
 
   export const findTicket = async (req: Request, res: Response) => {
       try {
-          const ticket = await Ticket.findByPk(req.params.ticketId);
+          const ticket: Ticket = await Ticket.findByPk(req.params.ticketId);
           res.json(ticket);
       } catch (err) {
           res.json({
@@ -75,7 +73,7 @@ export const getAllTickets = async (req: Request, res: Response) => {
               id: req.params.ticketId
             }
           })
-          const tickets = await Ticket.findAll()
+          const tickets: Ticket[] = await Ticket.findAll()
           res.json(tickets);
       } catch (err) {
           res.json({
@@ -86,8 +84,8 @@ export const getAllTickets = async (req: Request, res: Response) => {
 
   export const closeTicket = async (req: Request, res: Response) => {
       try {
-          let ticketId = req.body.ticketId;
-          let replacement = {};
+          let ticketId: number = req.body.ticketId;
+          let replacement: object = {};
           if (req.body.action === 'drop') {
               replacement = {
                   assignee: null,
@@ -104,8 +102,8 @@ export const getAllTickets = async (req: Request, res: Response) => {
                   id: ticketId
               }
           });
-          let status = ["assigned", "unassigned", "active"];
-          const tickets = await Ticket.findAll({
+          let status: string[] = helpers.status();
+          const tickets: Ticket[] = await Ticket.findAll({
               where: {
                   status: {
                       [Op.or]: status
@@ -128,18 +126,18 @@ export const getAllTickets = async (req: Request, res: Response) => {
   //take ticket
   export const takeTicket = async (req: Request, res: Response) => {
       try {
-          let decodedID = req.params.ticketId;
-          const currentUser = await User.findByPk(req.session.userId);
-          let fullname = currentUser.firstName + ' ' + currentUser.lastName;
+          let tickID: string = req.params.ticketId;
+          const currentUser: User = await User.findByPk(req.session.userId);
+          let fullname: string = currentUser.firstName + ' ' + currentUser.lastName;
 
           const replacement = {
               assigneeID: req.session.userId, //when a person hits 'take'
               assignee: fullname,
               status: 'assigned'
           }
-          const updatedTicket = await Ticket.update(replacement, {
+          const updatedTicket: [number, Ticket[]] = await Ticket.update(replacement, {
               where: {
-                  id: decodedID
+                  id: tickID
               }
           })
           res.json(updatedTicket)

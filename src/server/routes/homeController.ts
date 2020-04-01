@@ -1,16 +1,16 @@
 import { Ticket } from '../models/Ticket';
 import { User } from '../models/User';
 import { Session } from '../models/Session';
-import { helpers } from '../middleware/helperFunctions';
+import { helpers } from '../services/helperFunctions';
 import { Op } from "sequelize";
 import { Request, Response} from 'express';
 
 
   export const list =  async (req: Request, res: Response) => {
       try {
-          let status = [];
+          let status: any;
           if (req.query.status === undefined || req.query.status === 'active') {
-              status = ["assigned", "unassigned", "active"];
+              status = helpers.status();
           } else {
               status.push(req.query.status);
           }
@@ -36,13 +36,13 @@ import { Request, Response} from 'express';
 
 export const mytickets = async (req: Request, res: Response) => {
       try {
-          let status;
+          let status: any;
           if (req.query.status === undefined || req.query.status === 'active') {
-              status = ["assigned", "unassigned", "active"];
+              status = helpers.status();
           } else {
               status = req.query.status;
           }
-          const tickets = await Ticket.findAll({
+          const tickets: Ticket[] = await Ticket.findAll({
               where: {
                   assigneeID: req.session.userId,
                   status
@@ -63,20 +63,20 @@ export const mytickets = async (req: Request, res: Response) => {
 
 export const taketicket = async (req: Request, res: Response) => {
       try {
-          let status;
+          let status: any;
           if (req.query.status === undefined || req.query.status === 'active') {
-              status = ["assigned", "unassigned", "active"];
+              status = helpers.status();
           } else {
               status = req.query.status;
           }
-          const sesh:any = await Session.findOne({
+          const sesh: any = await Session.findOne({
               where: {
                   sid: req.session.id
               },
               include: [User]
           });
-          let userDepartment = sesh.user.department;
-          const tickets = await Ticket.findAll({
+          let userDepartment: string = sesh.User.department;
+          const tickets: Ticket[] = await Ticket.findAll({
               where: {
                   department: userDepartment,
                   assignee: null,
@@ -98,14 +98,14 @@ export const taketicket = async (req: Request, res: Response) => {
 
 export const outgoing = async (req: Request, res: Response) => {
       try {
-          let status;
+          let status: any;
           if (req.query.status === undefined || req.query.status === 'active') {
-              status = ["assigned", "unassigned", "active"];
+              status = helpers.status();
           } else {
               status = req.query.status;
           }
-          let initiatorId = req.session.userId;
-          let tickets = await Ticket.findAll({
+          let initiatorId: any = req.session.userId;
+          let tickets: Ticket[] = await Ticket.findAll({
               where: {
                   initiatorId,
                   status

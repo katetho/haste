@@ -1,5 +1,4 @@
 import { Request, Response} from 'express';
-const Base64 = require('js-base64').Base64;
 import { User } from '../models/User';
 import { validate } from '../services/validators';
 import bcrypt from 'bcrypt';
@@ -18,18 +17,16 @@ export const getRegister = async (req: Request, res: Response) => { // /get regi
   }
 
   export const postRegister = async (req: Request, res: Response) => { //post register
-      try {
-          let invalid = [];
-          const result = await User.findOne({
+    let invalid = [];  
+    try {
+          const result: User = await User.findOne({
               where: {
                   email: req.body.email
               }
           });
-
             if(result !== null) {
             invalid.push('email')
           }
-
           if (req.body.repPassword !== req.body.password) {
               invalid.push('repeatPassword');
           }
@@ -48,28 +45,27 @@ export const getRegister = async (req: Request, res: Response) => { // /get regi
           if (!validate.department(req.body.department)) {
               invalid.push('department');
           }
-          // if([]) - true; if([]==false) - true as well
-          //[] is interpreted as 0 by '==', and 'if' converts any existing object to true
-          if (invalid.length) {
-              return res.status(422)
-                  .json(invalid);
+
+          if (invalid.length > 0) {
+              throw 'invalid';
           }
-          bcrypt.hash(req.body.password, saltRounds)
-              .then(async (hash) => {
-                  const user = await User.create({
-                      firstName: req.body.firstName,
-                      lastName: req.body.lastName,
-                      email: req.body.email,
-                      department: req.body.department,
-                      password: hash,
-                      role: req.body.role
-                  }).catch((err: string)=>{
-                    console.log('Query error: '+err)
-                  });
-                res.json(user);
-              })
+          const hash: string = await bcrypt.hash(req.body.password, saltRounds);
+              const user: User = await User.create({
+                firstName: req.body.firstName,
+                lastName: req.body.lastName,
+                email: req.body.email,
+                department: req.body.department,
+                password: hash,
+                role: req.body.role
+            })
+            res.json(user);
       } catch (err) {
-          res.json({
+          if (err==='invalid') {
+            res.status(422)
+            .json(invalid);
+          }
+        res.status(422)
+        .json({
               message: err
           });
       }
@@ -89,11 +85,11 @@ export const getRegister = async (req: Request, res: Response) => { // /get regi
   
   export const postSignin = async (req: Request, res: Response) => { //post signin
       try {
-          let email = req.body.email;
-          let password = req.body.password;
+          let email: string = req.body.email;
+          let password: string = req.body.password;
           if (email && password) {
               let validPassword = false;
-              const user = await User.findOne({
+              const user: User = await User.findOne({
                   where: {
                       email: req.body.email
                   }
@@ -104,7 +100,8 @@ export const getRegister = async (req: Request, res: Response) => { // /get regi
                           validPassword = result;
                           if (validPassword) { //if the user's present in the DB
                           req.session.userId = user.id; //create this field & check for the presence of it
-                              let username = Base64.encode(user.firstName + ' ' + user.lastName);
+                              let username: string = user.firstName + ' ' + user.lastName;
+                              console.log('USERNAME' + username);
                               res.json(username); //when they're tring to access certain pages
                           } else {
                               res.status(401)
@@ -119,7 +116,7 @@ export const getRegister = async (req: Request, res: Response) => { // /get regi
                       .json('email');
               }
           } else {
-              let missing = [];
+              let missing: any[] = [];
               if (!req.body.password) {
                   missing.push("password");
               }

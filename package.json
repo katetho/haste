@@ -9,8 +9,8 @@
     "prod-webpack": "webpack --config webpack.prod.js",
     "server": "nodemon public/server/app.js",
     "dev-gulp": "gulp watch",
-    "typescript-server": "tsc -p ./src/server/tsconfig.json",
-    "dev": "concurrently \"npm run typescript-server\" \"npm run dev-gulp\" \"npm run dev-webpack\" \"npm run server\"",
+    "ts-server": "tsc -w -p ./src/server/tsconfig.json",
+    "dev": "concurrently \"npm run ts-server\" \"npm run dev-gulp\" \"npm run dev-webpack\" \"npm run server\"",
     "build": "concurrently \"npm run dev-gulp\" \"npm run prod-webpack\" \"npm run server\""
   },
   "repository": {

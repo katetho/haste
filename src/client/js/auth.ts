@@ -22,7 +22,7 @@ function postAuth(res:any): void {
   if (res.status === 200) {
       Promise.resolve(res.json()).then((data)=>{
       username = data;
-      localStorage.un = username; //base64 encoded
+      localStorage.un = username;
       window.location.replace('/')
     })
   }

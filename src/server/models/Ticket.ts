@@ -12,6 +12,8 @@ export class Ticket extends Model {
     public date!: Date;
     public assignee!: string;
     public status!: string;
+    public initiatorId!: string;
+    public assigneeID!: string;
 
       // timestamps!
   public readonly createdAt!: Date;
@@ -49,6 +51,12 @@ Ticket.init({
     status: {
         type: DataTypes.STRING(128),
         defaultValue: 'unassigned'
+    },
+    assigneeID: {
+        type: DataTypes.INTEGER.UNSIGNED
+    },
+    initiatorId: {
+        type: DataTypes.INTEGER.UNSIGNED
     }
 }, {
     sequelize: db,
