@@ -1,4 +1,3 @@
-import { Ticket } from '../models/Ticket';
 import { User } from '../models/User';
 import { Session } from '../models/Session';
 import { helpers } from '../services/helperFunctions';
@@ -6,16 +5,9 @@ import { Request, Response} from 'express';
 
 export const list = async (req: Request, res: Response) => {
     try {
-        if (req.query.status === undefined) {
-            req.query.status = 'active';
-        }
-        let tickets: Ticket[] = await Ticket.scope(req.query.status)
-            .findAll();
-        helpers.ticketHandler(tickets, req);
-
         res.render('home', {
             title: 'Tickets',
-            tickets: tickets
+            tickets: await helpers.ticketStatus(req.query.status, req)
         });
     } catch (err) {
         res.render('home', {
@@ -27,19 +19,13 @@ export const list = async (req: Request, res: Response) => {
 
 export const mytickets = async (req: Request, res: Response) => {
     try {
-        if (req.query.status === undefined) {
-            req.query.status = 'active';
-        }
-        let tickets: Ticket[] = await Ticket.scope(req.query.status).findAll({
+        res.render('home', {
+            title: 'Tickets',
+            tickets: await helpers.ticketStatus(req.query.status, req, {
                 where: {
                     assigneeID: req.session.userId
                 }
-            });
-
-        helpers.ticketHandler(tickets, req);
-        res.render('home', {
-            title: 'Tickets',
-            tickets
+            })
         });
     } catch (err) {
         console.log(err);
@@ -51,9 +37,6 @@ export const mytickets = async (req: Request, res: Response) => {
 
 export const taketicket = async (req: Request, res: Response) => {
     try {
-        if (req.query.status === undefined) {
-            req.query.status = 'active';
-        }
         const sesh: any = await Session.findOne({
             where: {
                 sid: req.session.id
@@ -61,16 +44,14 @@ export const taketicket = async (req: Request, res: Response) => {
             include: [User]
         });
         let userDepartment: string = sesh.User.department;
-        let tickets: Ticket[] = await Ticket.scope(req.query.status).findAll({
-                where: {
-                    department: userDepartment,
-                    assignee: null
-                }
-            });
-        helpers.ticketHandler(tickets, req);
         res.render('home', {
             title: 'Tickets',
-            tickets
+            tickets: await helpers.ticketStatus(req.query.status, req, {
+                    where: {
+                        department: userDepartment,
+                        assignee: null
+                    }
+                })
         });
     } catch (err) {
         res.render('home', {
@@ -82,19 +63,13 @@ export const taketicket = async (req: Request, res: Response) => {
 
 export const outgoing = async (req: Request, res: Response) => {
     try {
-        if (req.query.status === undefined) {
-            req.query.status = 'active';
-        }
-        let initiatorId: number = req.session.userId;
-        let tickets: Ticket[] = await Ticket.scope(req.query.status).findAll({
-                where: {
-                    initiatorId
-                }
-            });
-        helpers.ticketHandler(tickets, req);
         res.render('home', {
             title: 'Tickets',
-            tickets
+            tickets: await helpers.ticketStatus(req.query.status, req, {
+                where: {
+                    initiatorId: req.session.userId
+                }
+            })
         });
     } catch (err) {
         res.render('home', {

@@ -1,4 +1,15 @@
+import { Ticket } from '../models/Ticket';
+import { Request, Response} from 'express';
+
 export const helpers = {
+    ticketStatus: async function(status: string, req: Request, condition?: object): Promise<Ticket[]> {
+        if (status === undefined) {
+            status = 'active';
+        }
+        let tickets: Ticket[] = await Ticket.scope(status).findAll(condition);
+        this.ticketHandler(tickets, req);
+        return tickets;
+    },
     distribute: function(items: Array<any>) {
         if (items.length >= 2) {
             items[0].openDiv = true;

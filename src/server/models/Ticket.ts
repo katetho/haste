@@ -64,7 +64,7 @@ Ticket.init({
         active: {
             where: {
                 status: {
-                    [Op.or]: ['active', 'assigned', 'unassigned', 'undefined']
+                    [Op.or]: ['active', 'assigned', 'unassigned']
                 }
             }
       },
