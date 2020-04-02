@@ -47,7 +47,7 @@ export const getRegister = async (req: Request, res: Response) => { // /get regi
           }
 
           if (invalid.length > 0) {
-              throw 'invalid';
+              throw new Error('invalid');
           }
           const hash: string = await bcrypt.hash(req.body.password, saltRounds);
               const user: User = await User.create({
