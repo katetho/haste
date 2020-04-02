@@ -1,6 +1,7 @@
 import { Model, DataTypes} from 'sequelize';
 import { User } from './User';
-import { db } from '../config/database'
+import { db } from '../config/database';
+import { Op } from "sequelize";
 
 export class Ticket extends Model {
     public id!: number;
@@ -59,6 +60,30 @@ Ticket.init({
         type: DataTypes.INTEGER.UNSIGNED
     }
 }, {
+    scopes: {
+        active: {
+            where: {
+                status: {
+                    [Op.or]: ['active', 'assigned', 'unassigned', 'undefined']
+                }
+            }
+      },
+      assigned: {
+          where: {
+              status: 'assigned'
+          }
+      },
+      unassigned: {
+          where: {
+              status: 'unassigned'
+          }
+      },
+      closed: {
+          where: {
+              status: 'closed'
+          }
+      }
+    },
     sequelize: db,
     tableName: 'tickets'
 })

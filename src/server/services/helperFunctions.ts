@@ -1,7 +1,4 @@
 export const helpers = {
-    status: function(): Array<string> {
-        return ["assigned", "unassigned", "active"];
-    },
     distribute: function(items: Array<any>) {
         if (items.length >= 2) {
             items[0].openDiv = true;

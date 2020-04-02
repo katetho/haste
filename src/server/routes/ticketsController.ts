@@ -1,20 +1,12 @@
 import { Ticket } from '../models/Ticket';
 import { User } from '../models/User';
 import { helpers } from '../services/helperFunctions';
-import { Op } from "sequelize";
 import { Request, Response} from 'express';
 
 export const getAllTickets = async (req: Request, res: Response) => {
       try { //status - show all, but closed tickets
-          let status: string[] = helpers.status();
-          const tickets: Ticket[] = await Ticket.findAll({
-              where: {
-                  status: {
-                      [Op.or]: status
-                  }
-              }
-          })
-          res.json(tickets);
+        const tickets: Ticket[] = await Ticket.scope('active').findAll();
+        res.json(tickets);
       } catch (err) {
           res.json({
               message: err
@@ -24,7 +16,6 @@ export const getAllTickets = async (req: Request, res: Response) => {
   
   export const postTicket = async (req: Request, res: Response) => {
       try {
-          let status = helpers.status();
           let initiatorId: number = req.session.userId;
           const ticket: Ticket = await Ticket.create({
               title: req.body.title,
@@ -34,13 +25,7 @@ export const getAllTickets = async (req: Request, res: Response) => {
               description: req.body.description,
               initiatorId
           });
-          const tickets = await Ticket.findAll({
-              where: {
-                  status: {
-                      [Op.or]: status
-                  }
-              }
-          })
+          const tickets = await Ticket.scope('active').findAll();
           helpers.ticketHandler(tickets, req);
           res.render('home', {
               title: 'Tickets',
@@ -102,14 +87,7 @@ export const getAllTickets = async (req: Request, res: Response) => {
                   id: ticketId
               }
           });
-          let status: string[] = helpers.status();
-          const tickets: Ticket[] = await Ticket.findAll({
-              where: {
-                  status: {
-                      [Op.or]: status
-                  }
-              }
-          })
+          const tickets: Ticket[] = await Ticket.scope('active').findAll();
           helpers.ticketHandler(tickets, req);
           res.render('home', {
               title: 'Tickets',
