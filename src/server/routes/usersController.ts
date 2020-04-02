@@ -46,28 +46,30 @@ export const postRegister = async (req: Request, res: Response) => { //post regi
             invalid.push('department');
         }
 
-        if (invalid.length > 0) {
-            throw 'invalid';
-        }
-        const hash: string = await bcrypt.hash(req.body.password, saltRounds);
-        const user: User = await User.create({
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
-            email: req.body.email,
-            department: req.body.department,
-            password: hash,
-            role: req.body.role
-        })
-        res.json(user);
-    } catch (err) {
-        if (err === 'invalid') {
-            res.status(422).json(invalid);
-        }
-        res.status(422).json({
-                message: err
-            });
-    }
-}
+          if (invalid.length > 0) {
+              throw new Error('invalid');
+          }
+          const hash: string = await bcrypt.hash(req.body.password, saltRounds);
+              const user: User = await User.create({
+                firstName: req.body.firstName,
+                lastName: req.body.lastName,
+                email: req.body.email,
+                department: req.body.department,
+                password: hash,
+                role: req.body.role
+            })
+            res.json(user);
+      } catch (err) {
+          if (err.message==='invalid') {
+            res.status(422)
+            .json(invalid);
+          }
+        res.status(422)
+        .json({
+              message: err
+          });
+      }
+  }
 
 export const getSignin = async (req: Request, res: Response) => { //get signin
     try {
