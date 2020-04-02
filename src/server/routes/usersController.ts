@@ -60,7 +60,7 @@ export const getRegister = async (req: Request, res: Response) => { // /get regi
             })
             res.json(user);
       } catch (err) {
-          if (err==='invalid') {
+          if (err.message==='invalid') {
             res.status(422)
             .json(invalid);
           }
