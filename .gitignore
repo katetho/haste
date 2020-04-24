@@ -105,3 +105,6 @@ dist
 
 # Compiled JS code
 public/
+
+#Vscode
+.vscode/

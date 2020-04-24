@@ -1,19 +1,20 @@
 import { Ticket } from '../models/Ticket';
-import { Request, Response} from 'express';
+import { Request} from 'express';
 
 export const helpers = {
-    ticketStatus: async function(status: string, req: Request, condition?: object): Promise<Ticket[]> {
+    displayTickets: async function(status: string, req: Request, condition ? : object): Promise<Ticket[]> {
         if (status === undefined) {
             status = 'active';
         }
-        let tickets: Ticket[] = await Ticket.scope(status).findAll(condition);
+        let tickets: Ticket[] = await Ticket.scope(status)
+            .findAll(condition);
         this.ticketHandler(tickets, req);
         return tickets;
     },
-    distribute: function(items: Array<any>) {
+    distribute: function(items: Array < any > ) {
         if (items.length >= 2) {
             items[0].openDiv = true;
-            let mid;
+            let mid: any;
             if (items.length % 2 !== 0) {
                 mid = Math.floor(items.length / 2);
             } else {
@@ -27,7 +28,7 @@ export const helpers = {
             items[0].closeDiv = true;
         }
     },
-    ticketTime: function(items: Array<any>) {
+    ticketTime: function(items: Array < any > ) {
         items.forEach((item, i, arr) => {
             arr[i].deadlineUI = item.deadline.toLocaleString();
         })
@@ -45,33 +46,31 @@ export const helpers = {
             }
         }
     },
-    encodeIDs: function(items: Array<any>) {
+    encodeIDs: function(items: Array < any > ) {
         items.forEach((item) => {
             item.encodedID = item.id;
         })
     },
-    statusCheck: function(items: Array<any>,req) {
+    statusCheck: function(items: Array < any > , req) {
         items.forEach((item) => {
-            if(item.assigneeID == req.session.userId){
-              item.assignedToCurrent = true;
+            if (item.assigneeID == req.session.userId) {
+                item.assignedToCurrent = true;
+            } else {
+                item.assignedToCurrent = false;
             }
-            else {
-              item.assignedToCurrent = false;
-            }
-            if(item.status === 'closed'){
-              item.closed=true;
-            }
-            else {
-              item.closed=false;
+            if (item.status === 'closed') {
+                item.closed = true;
+            } else {
+                item.closed = false;
             }
         })
     },
-    ticketHandler: function(items: Array<any>,req) {
-      if(items.length>0) {
-      this.distribute(items);
-      this.ticketTime(items);
-      this.encodeIDs(items);
-      this.statusCheck(items,req);
-      }
+    ticketHandler: function(items: Array < any > , req: Request) {
+        if (items.length > 0) {
+            this.distribute(items);
+            this.ticketTime(items);
+            this.encodeIDs(items);
+            this.statusCheck(items, req);
+        }
     }
 }

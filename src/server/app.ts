@@ -8,14 +8,12 @@ import bodyParser from 'body-parser';
 import { router } from './routes/routes';
 import cors from 'cors';
 import { db } from './config/database';
-import { Sequelize } from 'sequelize';
 
 app.use(express.static(path.join(__dirname, '/../client')));
 app.set('view engine', 'handlebars');
 app.engine('handlebars', exphbrs({
     defaultLayout: 'main',
-    layoutsDir: path.join(__dirname, '/../../views/layouts'),
-    //partialsDir: path.join(__dirname, '/../../views/partials'),
+    layoutsDir: path.join(__dirname, '/../../views/layouts')
 }));
 app.use(bodyParser.json());
 app.use(cors());

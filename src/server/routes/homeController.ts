@@ -5,33 +5,21 @@ import { Request, Response} from 'express';
 
 export const list = async (req: Request, res: Response) => {
     try {
-        res.render('home', {
-            title: 'Tickets',
-            tickets: await helpers.ticketStatus(req.query.status, req)
-        });
+        res.json(await helpers.displayTickets(req.query.status, req));
     } catch (err) {
-        res.render('home', {
-            title: 'Tickets'
-        });
-        console.log(err);
+        res.json(err)
     }
 }
 
 export const mytickets = async (req: Request, res: Response) => {
     try {
-        res.render('home', {
-            title: 'Tickets',
-            tickets: await helpers.ticketStatus(req.query.status, req, {
+        res.json(await helpers.displayTickets(req.query.status, req, {
                 where: {
                     assigneeID: req.session.userId
                 }
-            })
-        });
+            }));
     } catch (err) {
-        console.log(err);
-        res.render('home', {
-            title: 'Tickets'
-        });
+        res.json(err)
     }
 }
 
@@ -44,37 +32,25 @@ export const taketicket = async (req: Request, res: Response) => {
             include: [User]
         });
         let userDepartment: string = sesh.User.department;
-        res.render('home', {
-            title: 'Tickets',
-            tickets: await helpers.ticketStatus(req.query.status, req, {
+        res.json(await helpers.displayTickets(req.query.status, req, {
                     where: {
                         department: userDepartment,
                         assignee: null
                     }
-                })
-        });
+                }));
     } catch (err) {
-        res.render('home', {
-            title: 'Tickets'
-        });
-        console.log(err);
+        res.json(err)
     }
 }
 
 export const outgoing = async (req: Request, res: Response) => {
     try {
-        res.render('home', {
-            title: 'Tickets',
-            tickets: await helpers.ticketStatus(req.query.status, req, {
+        res.json(await helpers.displayTickets(req.query.status, req, {
                 where: {
                     initiatorId: req.session.userId
                 }
-            })
-        });
+            }));
     } catch (err) {
-        res.render('home', {
-            title: 'Tickets'
-        });
-        console.log(err);
+        res.json(err)
     }
 }

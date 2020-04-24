@@ -85,10 +85,11 @@ export const getSignin = async (req: Request, res: Response) => { //get signin
 
 export const postSignin = async (req: Request, res: Response) => { //post signin
     try {
+        let user: User;
         let email: string = req.body.email;
         let password: string = req.body.password;
         if (email && password) {
-            const user: User = await User.findOne({
+                user = await User.findOne({
                 where: {
                     email: req.body.email
                 }
@@ -98,7 +99,7 @@ export const postSignin = async (req: Request, res: Response) => { //post signin
                 if (result) { //if the user's present in the DB
                     req.session.userId = user.id; //create this field & check for the presence of it
                     let username: string = user.firstName + ' ' + user.lastName;
-                    res.json(username); //when they're tring to access certain pages
+                    res.json(user); //when they're tring to access certain pages
                 } else {
                     res.status(401).json('password');
                 }
@@ -106,14 +107,14 @@ export const postSignin = async (req: Request, res: Response) => { //post signin
                 res.status(401).json('email');
             }
         } else {
-            let missing: any[] = [];
+            let missing: string[]=[];
             if (!req.body.password) {
                 missing.push("password");
             }
             if (!req.body.email) {
                 missing.push("email");
             }
-            res.status(422).json(missing)
+            res.status(423).json(missing)
         }
     } catch (err) {
         res.json({

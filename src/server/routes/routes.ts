@@ -6,7 +6,7 @@ import * as ticketsRoutes from './ticketsController';
 import * as usersRoutes from './usersController';
 import { redirects } from '../middleware/redirects';
 
-router.use(redirects);
+//router.use(redirects);
 router.get('/', homeRoutes.list);
 router.get('/mytickets', homeRoutes.mytickets);
 router.get('/taketicket', homeRoutes.taketicket);
