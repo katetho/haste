@@ -10,7 +10,8 @@
     "server": "nodemon public/server/app.js",
     "ts-server": "tsc -w -p ./src/server/tsconfig.json",
     "dev": "concurrently \"npm run ts-server\" \"npm run dev-webpack\" \"npm run server\"",
-    "build": "concurrently \"npm run prod-webpack\" \"npm run server\""
+    "build": "concurrently \"npm run prod-webpack\" \"npm run server\"",
+    "heroku-postbuild": "concurrently \"npm run ts-server\" \"npm run dev-webpack\" \"npm run server\""
   },
   "repository": {
     "type": "git",
