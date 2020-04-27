@@ -1,3 +1,3 @@
 //Connect to DB
 import { Sequelize } from 'sequelize-typescript';
-export const db = new Sequelize('mysql://root:2020@192.168.99.100:3306/haste');
+export const db = new Sequelize('mysql://b815ccf5030b93:868175ea@eu-cdbr-west-03.cleardb.net/heroku_92b0692982f5285');

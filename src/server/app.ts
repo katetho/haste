@@ -45,10 +45,10 @@ let seshStore = new SequelizeStore({
 });
 
 app.use(session({
-    name: process.env.SESSION_NAME,
+    name: "sid",
     saveUninitialized: true, //false for implementing login sessions
     resave: true, //true saves the ssesion back to DB even if unmodified
-    secret: process.env.SESSION_SECRET,
+    secret: "make_up_a_better_secret",
     store: seshStore,
     cookie: {
         path: "/",
