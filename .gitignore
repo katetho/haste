@@ -103,8 +103,5 @@ dist
 # TernJS port file
 .tern-port
 
-# Compiled JS code
-public/
-
 #Vscode
 .vscode/
