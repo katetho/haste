@@ -34,6 +34,10 @@ Ticket.init({
     assignee: {
         type: sequelize_1.DataTypes.STRING(128)
     },
+    assignedToCurrent: {
+        type: sequelize_1.DataTypes.BOOLEAN,
+        defaultValue: false
+    },
     status: {
         type: sequelize_1.DataTypes.STRING(128),
         defaultValue: 'unassigned'
@@ -78,5 +82,5 @@ Ticket.belongsTo(User_1.User, {
 Ticket.belongsTo(User_1.User, {
     foreignKey: 'assigneeID'
 });
-Ticket.sync(); //create if not created
+//Ticket.sync(); //create if not created
 //# sourceMappingURL=Ticket.js.map

@@ -18,8 +18,8 @@ exports.helpers = {
             }
             let tickets = yield Ticket_1.Ticket.scope(status)
                 .findAll(condition);
-            this.ticketHandler(tickets, req);
-            return tickets;
+            let items = this.ticketHandler(tickets, req);
+            return items;
         });
     },
     distribute: function (items) {
@@ -88,6 +88,7 @@ exports.helpers = {
             this.encodeIDs(items);
             this.statusCheck(items, req);
         }
+        return items;
     }
 };
 //# sourceMappingURL=helperFunctions.js.map

@@ -6,5 +6,5 @@ export declare const helpers: {
     ticketTime: (items: any[]) => void;
     encodeIDs: (items: any[]) => void;
     statusCheck: (items: any[], req: any) => void;
-    ticketHandler: (items: any[], req: Request<import("express-serve-static-core").ParamsDictionary>) => void;
+    ticketHandler: (items: any[], req: Request<import("express-serve-static-core").ParamsDictionary>) => any[];
 };

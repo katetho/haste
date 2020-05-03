@@ -9,6 +9,7 @@ export declare class Ticket extends Model {
     date: Date;
     assignee: string;
     status: string;
+    assignedToCurrent: string;
     initiatorId: string;
     assigneeID: string;
     readonly createdAt: Date;

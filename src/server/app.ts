@@ -16,7 +16,13 @@ app.engine('handlebars', exphbrs({
     layoutsDir: path.join(__dirname, '/../../views/layouts')
 }));
 app.use(bodyParser.json());
-app.use(cors());
+app.use(cors({
+    origin: function(origin, callback){
+      return callback(null, true);
+    },
+    optionsSuccessStatus: 200,
+    credentials: true
+  }));
 //test DB
 db.authenticate()
     .then(() => {
@@ -52,7 +58,7 @@ app.use(session({
     store: seshStore,
     cookie: {
         path: "/",
-        maxAge: 1000 * 60 * 10, //10 minutes
+        maxAge: 1000 * 60 * 100, //100 minutes
         sameSite: 'strict',
         secure: false //no https :(
     }

@@ -13,6 +13,7 @@ export class Ticket extends Model {
     public date!: Date;
     public assignee!: string;
     public status!: string;
+    public assignedToCurrent!: string;
     public initiatorId!: string;
     public assigneeID!: string;
 
@@ -48,6 +49,10 @@ Ticket.init({
     },
     assignee: {
         type: DataTypes.STRING(128)
+    },
+    assignedToCurrent: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
     },
     status: {
         type: DataTypes.STRING(128),
@@ -95,4 +100,4 @@ Ticket.belongsTo(User, {
     foreignKey: 'assigneeID'
 });
 
-Ticket.sync(); //create if not created
+//Ticket.sync(); //create if not created

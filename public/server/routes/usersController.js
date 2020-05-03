@@ -37,22 +37,22 @@ exports.postRegister = (req, res) => __awaiter(void 0, void 0, void 0, function*
             }
         });
         if (result !== null) {
-            invalid.push('email');
+            invalid.push('user exists');
         }
         if (req.body.repPassword !== req.body.password) {
-            invalid.push('repeatPassword');
+            invalid.push("passwords don't match");
         }
         if (!validators_1.validate.name(req.body.firstName)) {
-            invalid.push('firstName');
+            invalid.push('invalid first name');
         }
         if (!validators_1.validate.name(req.body.lastName)) {
-            invalid.push('lastName');
+            invalid.push('invalid last name');
         }
         if (!validators_1.validate.password(req.body.password)) {
-            invalid.push('password');
+            invalid.push('invalid password');
         }
         if (!validators_1.validate.email(req.body.email)) {
-            invalid.push('email');
+            invalid.push('invalid email');
         }
         if (!validators_1.validate.department(req.body.department)) {
             invalid.push('department');
@@ -84,9 +84,7 @@ exports.postRegister = (req, res) => __awaiter(void 0, void 0, void 0, function*
 });
 exports.getSignin = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        res.render('signin', {
-            layout: 'users'
-        });
+        res.json(req.session.userId);
     }
     catch (err) {
         res.json({
@@ -153,9 +151,15 @@ exports.signout = (req, res) => {
     req.session.destroy((err) => {
         if (err) {
             res.redirect('/');
+            //     Session.destroy({
+            //         where: {
+            //             sid:req.session.id
+            //         }
+            //     })
         }
         res.clearCookie('sid');
         res.redirect('/users/signin');
+        req.session = null;
     });
 };
 //# sourceMappingURL=usersController.js.map

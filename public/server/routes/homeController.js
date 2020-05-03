@@ -32,7 +32,7 @@ exports.mytickets = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         res.json(err);
     }
 });
-exports.taketicket = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.taketicket = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const sesh = yield Session_1.Session.findOne({
             where: {

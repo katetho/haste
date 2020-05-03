@@ -23,7 +23,7 @@ export const mytickets = async (req: Request, res: Response) => {
     }
 }
 
-export const taketicket = async (req: Request, res: Response) => {
+export const taketicket = async (req: Request, res: Response, next) => {
     try {
         const sesh: any = await Session.findOne({
             where: {

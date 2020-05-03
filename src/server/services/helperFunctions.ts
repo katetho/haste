@@ -8,8 +8,8 @@ export const helpers = {
         }
         let tickets: Ticket[] = await Ticket.scope(status)
             .findAll(condition);
-        this.ticketHandler(tickets, req);
-        return tickets;
+            let items=this.ticketHandler(tickets, req);
+        return items;
     },
     distribute: function(items: Array < any > ) {
         if (items.length >= 2) {
@@ -72,5 +72,6 @@ export const helpers = {
             this.encodeIDs(items);
             this.statusCheck(items, req);
         }
+        return items;
     }
 }

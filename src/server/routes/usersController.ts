@@ -2,6 +2,7 @@ import { Request, Response} from 'express';
 import { User } from '../models/User';
 import { validate } from '../services/validators';
 import bcrypt from 'bcrypt';
+import { Session } from '../models/Session';
 const saltRounds: number = 10; //for password hashing
 
 export const getRegister = async (req: Request, res: Response) => { // /get register
@@ -25,22 +26,22 @@ export const postRegister = async (req: Request, res: Response) => { //post regi
             }
         });
         if (result !== null) {
-            invalid.push('email')
+            invalid.push('user exists')
         }
         if (req.body.repPassword !== req.body.password) {
-            invalid.push('repeatPassword');
+            invalid.push("passwords don't match");
         }
         if (!validate.name(req.body.firstName)) {
-            invalid.push('firstName');
+            invalid.push('invalid first name');
         }
         if (!validate.name(req.body.lastName)) {
-            invalid.push('lastName');
+            invalid.push('invalid last name');
         }
         if (!validate.password(req.body.password)) {
-            invalid.push('password');
+            invalid.push('invalid password');
         }
         if (!validate.email(req.body.email)) {
-            invalid.push('email');
+            invalid.push('invalid email');
         }
         if (!validate.department(req.body.department)) {
             invalid.push('department');
@@ -73,9 +74,7 @@ export const postRegister = async (req: Request, res: Response) => { //post regi
 
 export const getSignin = async (req: Request, res: Response) => { //get signin
     try {
-        res.render('signin', {
-            layout: 'users'
-        });
+        res.json(req.session.userId)
     } catch (err) {
         res.json({
             message: err
@@ -136,11 +135,18 @@ export const forgotPassword = async (req: Request, res: Response) => { // get fo
 }
 
 export const signout = (req: Request, res: Response) => { // get signout
+
     req.session.destroy((err: string) => {
         if (err) {
             res.redirect('/');
-        }
+        //     Session.destroy({
+        //         where: {
+        //             sid:req.session.id
+        //         }
+        //     })
+         }
         res.clearCookie('sid');
-        res.redirect('/users/signin')
+        res.redirect('/users/signin');
+        req.session=null;
     });
 }

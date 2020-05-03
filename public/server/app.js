@@ -20,7 +20,13 @@ app.engine('handlebars', express_handlebars_1.default({
     layoutsDir: path_1.default.join(__dirname, '/../../views/layouts')
 }));
 app.use(body_parser_1.default.json());
-app.use(cors_1.default());
+app.use(cors_1.default({
+    origin: function (origin, callback) {
+        return callback(null, true);
+    },
+    optionsSuccessStatus: 200,
+    credentials: true
+}));
 //test DB
 database_1.db.authenticate()
     .then(() => {
@@ -53,7 +59,7 @@ app.use(express_session_1.default({
     store: seshStore,
     cookie: {
         path: "/",
-        maxAge: 1000 * 60 * 10,
+        maxAge: 1000 * 60 * 100,
         sameSite: 'strict',
         secure: false //no https :(
     }
