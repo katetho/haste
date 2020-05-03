@@ -76,7 +76,7 @@
       "./setupJest.js"
     ]
   },
-  "engine": {
-    "node": "13.0.0"
+  "engines": {
+    "node": "13.x.x"
   }
 }
