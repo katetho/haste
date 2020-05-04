@@ -1,6 +1,5 @@
 import express from "express";
 const app = express();
-require('dotenv').config()
 import path from 'path';
 import exphbrs from 'express-handlebars';
 import session from 'express-session';
