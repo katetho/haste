@@ -1,6 +1,6 @@
 import express from "express";
 const app = express();
-require('dotenv/config');
+require('dotenv').config()
 import path from 'path';
 import exphbrs from 'express-handlebars';
 import session from 'express-session';
@@ -70,6 +70,6 @@ seshStore.sync();
 app.use('/', router)
 db.sync()
     .then(() => {
-        app.listen(process.env.PORT)
+        app.listen(process.env.PORT || 3002)
     })
     .catch(err => console.log(err));
