@@ -9,7 +9,8 @@
     "prod-webpack": "webpack --config webpack.prod.js",
     "server": "nodemon public/server/app.js",
     "ts-server": "tsc -w -p ./src/server/tsconfig.json",
-    "dev": "concurrently \"npm run ts-server\" \"npm run dev-webpack\" \"npm run server\""
+    "dev": "concurrently \"npm run ts-server\" \"npm run dev-webpack\" \"npm run server\"",
+    "start": "concurrently \"npm run ts-server\" \"npm run dev-webpack\" \"npm run server\""
   },
   "repository": {
     "type": "git",
