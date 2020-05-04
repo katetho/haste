@@ -70,6 +70,6 @@ seshStore.sync();
 app.use('/', router)
 db.sync()
     .then(() => {
-        app.listen(process.env.PORT)
+        app.listen(process.env.PORT || 3002)
     })
     .catch(err => console.log(err));
