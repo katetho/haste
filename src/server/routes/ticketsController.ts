@@ -16,6 +16,7 @@ export const getAllTickets = async (req: Request, res: Response) => {
   
   export const postTicket = async (req: Request, res: Response) => {
       try {
+          console.log(req.body.deadline+"!!!!!")
           let initiatorId: number = req.session.userId;
           const ticket: Ticket = await Ticket.create({
               title: req.body.title,

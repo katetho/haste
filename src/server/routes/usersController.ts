@@ -139,11 +139,11 @@ export const signout = (req: Request, res: Response) => { // get signout
     req.session.destroy((err: string) => {
         if (err) {
             res.redirect('/');
-        //     Session.destroy({
-        //         where: {
-        //             sid:req.session.id
-        //         }
-        //     })
+            Session.destroy({
+                 where: {
+                    sid:req.session.id
+                }
+            })
          }
         res.clearCookie('sid');
         res.redirect('/users/signin');

@@ -14,6 +14,7 @@ const Session_1 = require("../models/Session");
 const helperFunctions_1 = require("../services/helperFunctions");
 exports.list = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        console.log(req.session.userId + "!!!!");
         res.json(yield helperFunctions_1.helpers.displayTickets(req.query.status, req));
     }
     catch (err) {

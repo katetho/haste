@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const User_1 = require("../models/User");
 const validators_1 = require("../services/validators");
 const bcrypt_1 = __importDefault(require("bcrypt"));
+const Session_1 = require("../models/Session");
 const saltRounds = 10; //for password hashing
 exports.getRegister = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -151,11 +152,11 @@ exports.signout = (req, res) => {
     req.session.destroy((err) => {
         if (err) {
             res.redirect('/');
-            //     Session.destroy({
-            //         where: {
-            //             sid:req.session.id
-            //         }
-            //     })
+            Session_1.Session.destroy({
+                where: {
+                    sid: req.session.id
+                }
+            });
         }
         res.clearCookie('sid');
         res.redirect('/users/signin');

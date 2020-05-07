@@ -9,6 +9,7 @@ export const helpers = {
         let tickets: Ticket[] = await Ticket.scope(status)
             .findAll(condition);
             let items=this.ticketHandler(tickets, req);
+            console.log(items+"!!!!")
         return items;
     },
     distribute: function(items: Array < any > ) {

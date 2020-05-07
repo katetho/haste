@@ -25,6 +25,7 @@ exports.getAllTickets = (req, res) => __awaiter(void 0, void 0, void 0, function
 });
 exports.postTicket = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        console.log(req.body.deadline + "!!!!!");
         let initiatorId = req.session.userId;
         const ticket = yield Ticket_1.Ticket.create({
             title: req.body.title,

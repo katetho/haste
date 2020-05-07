@@ -23,7 +23,7 @@ Ticket.init({
         type: sequelize_1.DataTypes.STRING(128)
     },
     deadline: {
-        type: sequelize_1.DataTypes.DATE,
+        type: sequelize_1.DataTypes.STRING(128),
     },
     description: {
         type: sequelize_1.DataTypes.STRING(1024)
@@ -82,5 +82,5 @@ Ticket.belongsTo(User_1.User, {
 Ticket.belongsTo(User_1.User, {
     foreignKey: 'assigneeID'
 });
-//Ticket.sync(); //create if not created
+Ticket.sync(); //create if not created
 //# sourceMappingURL=Ticket.js.map

@@ -39,7 +39,7 @@ Ticket.init({
         type: DataTypes.STRING(128)
     },
     deadline: {
-        type: DataTypes.DATE,
+        type: DataTypes.STRING(128),
     },
     description: {
         type: DataTypes.STRING(1024)
@@ -100,4 +100,4 @@ Ticket.belongsTo(User, {
     foreignKey: 'assigneeID'
 });
 
-//Ticket.sync(); //create if not created
+Ticket.sync(); //create if not created
