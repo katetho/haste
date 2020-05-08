@@ -1,21 +1,19 @@
 <b>Project Description</b><br/>
-	Haste is a simple ticketing system that would allow an organization to keep track of tasks and issues in the company. A user will be able to create, assign, track and take tasks.
+	Haste is a simple ticketing system that would allow an organization to keep track of tasks and issues in the company. Users will be able to create, assign, track and take tasks.
 
 <b>How to run this project</b><br/>
-	1.	Pull this project, open up your command line and type either “npm run dev” or “npm run build” ( production build).<br/>
-	2.	Connect to a database. Visit https://www.mongodb.com/cloud/atlas, register or login, create a DB, copy the connection string and paste it instead of the variable called ‘process.env.DB_CONNECTION’ in ‘app.js’.<br/>
-	3.	Replace hidden variables (process.env.SESSION_NAME, process.env.SESSION_NAME) with your own string
-	Email me in case of any questions.<br/>
+	1.	https://haste-backend.herokuapp.com/
+	2.	All routes are listed here https://github.com/katetho/haste/blob/develop/src/server/routes/routes.ts
+	3.	Create a user and log in
+	4.	Front-End repo: https://github.com/katetho/haste_vue
 
 <b>Current stage of development</b><br/>
 	At the time of writing, this project has a database for storing tickets and users. A user can create a ticket and watch it dynamically appear with all the necessary information(title, description, deadline, etc).  All tickets appear on the home page(‘/’), ordered by date. This platform performs user authentication, so if you type in the homepage address, you will be redirected to ‘/users/signin’ if you’re not signed in, and the other way around for signed in users. For user registration I chose server-side field validation. Ticket creation fields are validated on the client side. For the most part, the UI was borrowed from a free bootstrap template and adjusted according to my needs. I’ve created some additional UI (e.g. ticket creation form), removed all of the utility scripts (dropdowns, tooltips, toggles, etc) and replaced them with my own. This website is in the active stage of development and I am currently working on many more features.
 
 <b>Technology stack</b><br/>
-	1.	Database: MongoDB schemas + mongoose<br/>
-	2.	Client-side scripts: vanilla JavaScript (using ES6)<br/>
+	1.	Database: MySQL + Sequelize<br/>
 	3.	Bundler, task runner: Webpack for modular code, gulp for compiling css and browserSync<br/>
 	4.	Server-side: NodeJS with Express<br/>
-	5.	Templating engine: handlebars<br/>
 	6.	Authentication: Sessions + cookies<br/>
 
 <b>Reference Section</b><br/>
