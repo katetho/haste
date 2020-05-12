@@ -44,7 +44,7 @@ export const postRegister = async (req: Request, res: Response) => { //post regi
             invalid.push('invalid email');
         }
         if (!validate.department(req.body.department)) {
-            invalid.push('department');
+            invalid.push('invalid department');
         }
 
           if (invalid.length > 0) {

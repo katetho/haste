@@ -19,7 +19,6 @@ exports.helpers = {
             let tickets = yield Ticket_1.Ticket.scope(status)
                 .findAll(condition);
             let items = this.ticketHandler(tickets, req);
-            console.log(items + "!!!!");
             return items;
         });
     },

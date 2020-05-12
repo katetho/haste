@@ -44,8 +44,8 @@ function extendDefaultFields(defaults, session) {
 let seshStore = new SequelizeStore({
     db,
     table: 'Session',
-    checkExpirationInterval: 15 * 60 * 1000, // The interval at which to cleanup expired sessions in milliseconds.
-    expiration: 10 * 100000000000, // The maximum age (in milliseconds) of a valid session.
+    checkExpirationInterval: 60 * 60 * 1000, // The interval at which to cleanup expired sessions in milliseconds.
+    expiration: 60 * 60 * 1000, // The maximum age (in milliseconds) of a valid session.
     extendDefaultFields
 });
 
@@ -57,7 +57,7 @@ app.use(session({
     store: seshStore,
     cookie: {
         path: "/",
-        maxAge: 1000 * 60 * 100000000000, //100000000000 minutes
+        maxAge: 60 * 60 * 1000, //100000000000 minutes
         sameSite: 'strict',
         secure: false //no https :(
     }

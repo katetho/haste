@@ -4,7 +4,7 @@ import { helpers } from '../services/helperFunctions';
 import { Request, Response} from 'express';
 
 export const list = async (req: Request, res: Response) => {
-    try {console.log(req.session.userId+"!!!!")
+    try {
         res.json(await helpers.displayTickets(req.query.status, req));
     } catch (err) {
         res.json(err)

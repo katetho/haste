@@ -56,7 +56,7 @@ exports.postRegister = (req, res) => __awaiter(void 0, void 0, void 0, function*
             invalid.push('invalid email');
         }
         if (!validators_1.validate.department(req.body.department)) {
-            invalid.push('department');
+            invalid.push('invalid department');
         }
         if (invalid.length > 0) {
             throw new Error('invalid');

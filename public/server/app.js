@@ -46,8 +46,8 @@ function extendDefaultFields(defaults, session) {
 let seshStore = new SequelizeStore({
     db: database_1.db,
     table: 'Session',
-    checkExpirationInterval: 15 * 60 * 1000,
-    expiration: 10 * 100000000000,
+    checkExpirationInterval: 60 * 60 * 1000,
+    expiration: 60 * 60 * 1000,
     extendDefaultFields
 });
 app.use(express_session_1.default({
@@ -58,7 +58,7 @@ app.use(express_session_1.default({
     store: seshStore,
     cookie: {
         path: "/",
-        maxAge: 1000 * 60 * 100000000000,
+        maxAge: 60 * 60 * 1000,
         sameSite: 'strict',
         secure: false //no https :(
     }
