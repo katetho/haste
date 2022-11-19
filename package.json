@@ -54,7 +54,7 @@
     "gulp-uglify": "^3.0.2",
     "gulp-uglify-es": "^2.0.0",
     "uglify": "^0.1.5",
-    "webpack-cli": "^3.0.1",
+    "webpack-cli": "^3.3.12",
     "webpack-merge": "^4.2.2"
   }
 }
