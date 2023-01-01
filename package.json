@@ -40,7 +40,7 @@
     "js-base64": "^2.5.2",
     "mongoose": "^5.8.1",
     "nodemon": "^2.0.2",
-    "webpack": "^4.41.6"
+    "webpack": "^5.75.0"
   },
   "devDependencies": {
     "browser-sync": "^2.26.7",
@@ -54,7 +54,7 @@
     "gulp-uglify": "^3.0.2",
     "gulp-uglify-es": "^2.0.0",
     "uglify": "^0.1.5",
-    "webpack-cli": "^3.0.1",
+    "webpack-cli": "^5.0.1",
     "webpack-merge": "^4.2.2"
   }
 }
